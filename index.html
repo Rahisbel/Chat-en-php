@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/icomoon/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Chat - Programacion II</title>
+</head>
+<body>
+    <header class="header"></header>
+    <section class="container">
+        <div class="container__title">
+            <div class="container__wrapper">
+                <h2 class="container__title--subtitle">Hola, Bienvenido al Chat UNET</h2>
+                <p class="container__title--despcription">Social Chat para la Asignatura de Programacion II</p>
+                <p class="container__title--members">Realizado por:</p>
+                <ol class="class__title--list">
+                    <li>Rahisbel Herrera</li>
+                    <li>Jesus Chacon</li>
+                </ol>
+            </div>
+        </div>
+        <div class="container__form">
+            <div class="form__wrapper">
+                <ul class="container__form__list" id="list">
+                    <li class="form__list active">Login</li>
+                    <li class="form__list">Register</li>
+                </ul>
+                <form action="" class="form" method="POST">
+                    <div class="form__user active">
+                        <h2>Iniciar Sesion</h2>
+                        <div class="form__user--wrapper">
+                            <label for="username">
+                                <input type="text" class="input username" name="user" placeholder="Usuario" >
+                            </label>
+                            <label for="password">
+                                <input type="password" class="input password" name="pass" placeholder="Contrasena">
+                            </label>
+                            <input type="submit" class="input submit" name="login" value="Iniciar Sesion">
+                        </div>
+                    </div>
+                    <div class="form__user">
+                        <h2>Registro</h2>
+                       <div class="form__user--wrapper">
+                        <label for="name">
+                            <input type="text" class="input name" name="name" placeholder="Nombre Completo">
+                        </label>
+                        <label for="username">
+                            <input type="text" class="input username" name="username" placeholder="Usuario">
+                        </label>
+                        <label for="password">
+                            <input type="password" class="input password" name="password" placeholder="Contrasena">
+                        </label>
+                        <label for="email">
+                            <input type="email" class="input email" name="email" placeholder="Correo">
+                        </label>
+                        <label for="" class="date">Fecha de Nacimiento:</label>
+                        <div class="fecha">
+                        <select name="dias" id="dias">
+                            <option value="Dias" disabled selected>Dias</option>
+                        </select>
+                        <select name="mes" id="mes">
+                            <option value="Mes" disabled selected>Mes</option>
+                            <option value="Enero">Enero</option>
+                            <option value="Febrero">Febrero</option>
+                            <option value="Marzo">Marzo</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Mayo">Mayo</option>
+                            <option value="Junio">Junio</option>
+                            <option value="Julio">Julio</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Septiembre">Septiembre</option>
+                            <option value="Obctubre">Obctubre</option>
+                            <option value="Noviembre">Noviembre</option>
+                            <option value="Diciembre">Diciembre</option>
+                        </select>
+                        <select name="age" id="age">
+                            <option value="Age" disabled selected>Age</option>
+                        </select>
+                        </div>
+                        <label for="men" class="radio">
+                            Sexo: 
+                            <input type="radio" name="sex" value="Hombre" id="men">
+                            Hombre
+                        </label>
+                        <label for="woman">
+                            <input type="radio" name="sex" value="Mujer" id="woman">
+                            Mujer
+                        </label>
+                        <input type="submit" class="input submit" name="register" value="Registrarme">
+                       </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
