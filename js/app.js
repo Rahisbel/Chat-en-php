@@ -11,4 +11,29 @@ $(document).ready(()=>{
             $forms[value].classList.add('active');
         }
     })
-})
+
+    const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Obctubre','Noviembre','Diciembre',]
+    
+    const $dias = document.getElementById('dias');
+    for (let index = 1; index < 32; index++) {
+        const $option = document.createElement('option');
+        $option.setAttribute('value',`${index}`);
+        $option.innerHTML = index;
+        $dias.appendChild($option);
+    }
+
+    const $meses = document.getElementById('mes');
+    meses.forEach(element => {
+        const $option = document.createElement('option');
+        $option.setAttribute('value',element);
+        $option.innerHTML = element;
+        $meses.appendChild($option);
+    });
+    const $ages = document.getElementById('age');
+    for (let index = 0; index < 100; index++) {
+        const $option = document.createElement('option');
+        $option.setAttribute('value',2019-index);
+        $option.innerHTML = 2019 - index;
+        $ages.appendChild($option);
+    }
+});
