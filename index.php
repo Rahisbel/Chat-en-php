@@ -8,7 +8,6 @@
             header("location:usuario.php");
         }
     }
-	
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +71,8 @@
 								$conectar->EstablecerConexion();
 								$query = "select * from Usuarios where nombreusuario='".$_POST["user"]."'";
 								$resultado = $conectar->getConexion()->query($query);
+
+								$_SESSION["nombreusuario"] = $_POST["user"];
 
 							if($resultado->num_rows>0){
 								$fila = mysqli_fetch_array($resultado,MYSQLI_ASSOC);
