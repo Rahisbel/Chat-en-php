@@ -10,7 +10,7 @@ class Conexion{
     }
 
     public function EstablecerConexion(){
-        $this->conexion = mysqli_connect("localhost","admin","7287256","Chat");
+        $this->conexion = new mysqli("localhost","admin","7287256","Chat");
         if(!$this->conexion){
             die('Error de Conexion' . mysqli_connect_errno());
         }
