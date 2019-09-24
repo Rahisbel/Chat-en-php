@@ -17,5 +17,6 @@ class Conexion{
             echo "Error al conectarse con la Base de Datos  ";
             exit;
         }                       
+
     }
 }
