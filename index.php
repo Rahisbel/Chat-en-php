@@ -1,6 +1,10 @@
 <?php
 	session_start();
 
+	error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+
+
 	 if(isset($_SESSION["administrador"])){
         if($_SESSION["administrador"]==1){
             header("location:administrador.php");
