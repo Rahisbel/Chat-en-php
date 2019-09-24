@@ -77,6 +77,7 @@
 								$fila = mysqli_fetch_array($resultado,MYSQLI_ASSOC);
 								if ($fila["clave"] == $_POST["pass"]) {
 									$_SESSION=$fila;
+
 									if($_SESSION["administrador"]==1){
             							header("location:administrador.php");
         							}else if($_SESSION["administrador"]==0) {
@@ -93,7 +94,7 @@
 
 							}
 							else{
-								echo "campos vacios";
+								echo "Campos vacios";
 							}
 						}
 

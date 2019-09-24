@@ -12,12 +12,9 @@
 </head>
 <body>
 
-
 	<form action="cerrar.php">
 		
 		<input type="submit" name= "cerrar" value= "cerrar sesion">
-
-
 
 	</form>
 	
