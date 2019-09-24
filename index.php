@@ -1,10 +1,10 @@
 <?php
 	session_start();
 
-	 if(isset($_SESSION["admin"])){
-        if($_SESSION["admin"]==1){
+	 if(isset($_SESSION["administrador"])){
+        if($_SESSION["administrador"]==1){
             header("location:administrador.php");
-        }else if($_SESSION["admin"]==0) {
+        }else if($_SESSION["administrador"]==0) {
             header("location:usuario.php");
         }
     }
@@ -67,8 +67,6 @@
 
 						if(isset($_POST["login"])){
 							if ((isset($_POST["user"]) && $_POST["user"]!= null) && (isset($_POST["pass"]) && $_POST["pass"] != null)) {
-								echo $_POST["user"];
-								echo $_POST["pass"];
 								include("conexionBD.php");
 								$conectar = new Conexion();
 								$conectar->EstablecerConexion();
@@ -77,40 +75,29 @@
 
 							if($resultado->num_rows>0){
 								$fila = mysqli_fetch_array($resultado,MYSQLI_ASSOC);
-								echo "string";
-								if ($fila["pass"] == $_POST["pass"]) {
+								if ($fila["clave"] == $_POST["pass"]) {
 									$_SESSION=$fila;
-								  	echo "contraseña";
-									if($_SESSION["admin"]==1){
+									if($_SESSION["administrador"]==1){
             							header("location:administrador.php");
-        							}else if($_SESSION["admin"]==0) {
+        							}else if($_SESSION["administrador"]==0) {
             							header("location:usuario.php");
         							}
 								}
 								else{
-									echo "datos invalidos";
+									echo "Datos invalidos";
 								}
 							}
 							else{
 								echo "Usuario no registrado";
 							}
 
-
+							}
+							else{
+								echo "campos vacios";
 							}
 						}
 
-
-
-
-
-
-
-
 					?>
-
-
-
-
 
                     <!-- Contenedor del Formulario de Registro -->
                     <div class="form__user">
