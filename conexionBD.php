@@ -10,11 +10,9 @@ class Conexion{
     }
 
     public function EstablecerConexion(){
-        $this->conexion=new mysqli("localhost","root","","Chat");
-        
-        if($this->conexion->connect_errno){
-            echo "Error al conectarse con la Base de Datos";
-            exit;
-        }                       
+        $this->conexion = mysqli_connect("localhost","admin","7287256","Chat");
+        if(!$this->conexion){
+            die('Error de Conexion' . mysqli_connect_errno());
+        }
     }
 }
