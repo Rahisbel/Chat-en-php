@@ -1,3 +1,16 @@
+<?php
+	session_start();
+
+	 if(isset($_SESSION["admin"])){
+        if($_SESSION["admin"]==1){
+            header("location:administrador.php");
+        }else if($_SESSION["admin"]==0) {
+            header("location:usuario.php");
+        }
+    }
+	
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +27,7 @@
     <title>Chat - Programacion II</title>
 </head>
 <body>
-    <!-- Cabezera del chat -->
+    <!-- Cabecera del chat -->
     <header class="header"></header>
     <!-- Contenedor del chat -->
     <section class="container">
@@ -49,6 +62,56 @@
                             <button type="submit" class="input submit" name="login" id="btn-login">Iniciar Sesion</button>
                         </div>
                     </div>
+					
+					<?php
+
+						if(isset($_POST["login"])){
+							if ((isset($_POST["user"]) && $_POST["user"]!= null) && (isset($_POST["pass"]) && $_POST["pass"] != null)) {
+								echo $_POST["user"];
+								echo $_POST["pass"];
+								include("conexionBD.php");
+								$conectar = new Conexion();
+								$conectar->EstablecerConexion();
+								$query = "select * from Usuarios where nombreusuario='".$_POST["user"]."'";
+								$resultado = $conectar->getConexion()->query($query);
+
+							if($resultado->num_rows>0){
+								$fila = mysqli_fetch_array($resultado,MYSQLI_ASSOC);
+								echo "string";
+								if ($fila["pass"] == $_POST["pass"]) {
+									$_SESSION=$fila;
+								  	echo "contraseña";
+									if($_SESSION["admin"]==1){
+            							header("location:administrador.php");
+        							}else if($_SESSION["admin"]==0) {
+            							header("location:usuario.php");
+        							}
+								}
+								else{
+									echo "datos invalidos";
+								}
+							}
+							else{
+								echo "Usuario no registrado";
+							}
+
+
+							}
+						}
+
+
+
+
+
+
+
+
+					?>
+
+
+
+
+
                     <!-- Contenedor del Formulario de Registro -->
                     <div class="form__user">
                         <h2>Registro</h2>
