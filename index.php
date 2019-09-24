@@ -73,10 +73,10 @@
 								include("conexionBD.php");
 								$conectar = new Conexion();
 								$conectar->EstablecerConexion();
-								$query = "select * from Usuarios where nombreusuario='".$_POST["user"]."'";
+								$query = "select * from usuarios where usuario='".$_POST["user"]."'";
 								$resultado = $conectar->getConexion()->query($query);
 
-								$_SESSION["nombreusuario"] = $_POST["user"];
+								$_SESSION["usuario"] = $_POST["user"];
 
 							if($resultado->num_rows>0){
 								$fila = mysqli_fetch_array($resultado,MYSQLI_ASSOC);
