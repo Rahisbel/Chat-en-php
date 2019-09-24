@@ -110,10 +110,10 @@
                         <h2>Registro</h2>
                         <!-- Inputs de, Nombre, Usuario, Password y Email -->
                         <div class="form__user--wrapper">
-                            <input type="text" class="input name" name="name" placeholder="Nombre Completo">
-                            <input type="text" class="input username" name="username" placeholder="Usuario">
-                            <input type="password" class="input password" name="password" placeholder="Contrasena">
-                            <input type="email" class="input email" name="email" placeholder="Correo">
+                            <input type="text" class="input name" name="name" id="name" placeholder="Nombre Completo">
+                            <input type="text" class="input username" name="username" id="user" placeholder="Usuario">
+                            <input type="password" class="input password" name="password" id="pass" placeholder="Contrasena">
+                            <input type="email" class="input email" name="email" id="email" placeholder="Correo">
                         <!-- Radio Button de Fecha de Nacimiento -->
                         <label for="" class="date">Fecha de Nacimiento:</label>
                         <div class="fecha">
@@ -133,14 +133,14 @@
                         <!-- Radio Buttons de Sexo -->
                         <label for="men" class="radio">
                             Sexo: 
-                            <input type="radio" name="sex" value="Hombre" id="men">
+                            <input type="radio" name="sex" value="H" id="men">
                             Hombre
                         </label>
                         <label for="woman">
-                            <input type="radio" name="sex" value="Mujer" id="woman">
+                            <input type="radio" name="sex" value="M" id="woman">
                             Mujer
                         </label>
-                        <button type="button" class="input submit" name="register">Registrarme</button>
+                        <button type="button" class="input submit" name="register" id="btn-register">Registrarme</button>
                        </div>
                     </div>
                 </form>
@@ -155,5 +155,7 @@
     <script src="js/jquery-3.4.1.min.js"></script>
     <!-- Archivo donde ira el codigo de js del Proyecto-->
     <script src="js/app.js"></script>
+    <!-- Archivo que valida y registra un usuario -->
+    <script src="js/register.js"></script>
 </body>
 </html>
