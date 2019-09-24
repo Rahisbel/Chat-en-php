@@ -39,7 +39,7 @@
 		<div class="container__title">
             <div class="container__wrapper">
                 <h2 class="container__title--subtitle">  Usuario </h2>
-                <p class="container__title--despcription"><?php echo "Usuario: ",$_SESSION["nombreusuario"]; ?></p>
+                <p class="container__title--despcription"><?php echo "Usuario: ",$_SESSION["usuario"]; ?></p>
 
             </div>
 

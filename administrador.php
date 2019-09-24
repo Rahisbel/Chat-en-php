@@ -39,7 +39,7 @@
 		<div class="container__title">
             <div class="container__wrapper">
                 <h2 class="container__title--subtitle">  Administrador </h2>
-                <p class="container__title--despcription"><?php echo "Usuario: ",$_SESSION["nombreusuario"]; ?></p>
+                <p class="container__title--despcription"><?php echo "Usuario: ",$_SESSION["usuario"]; ?></p>
                 <form action="" method="POST">
                 	<input type="submit" name="Contactos" value="Contactos">
                 </form>
@@ -50,7 +50,7 @@
             			include("conexionBD.php");
 						$conec = new Conexion();
 						$conec->EstablecerConexion();
-						$query = "select * from Contactos order by usuarioagregar";
+						$query = "select * from contactos order by usuarioagregar";
 						$resultado = $conec->getConexion()->query($query);
 
 						while ($contacto=$resultado->fetch_assoc()){
