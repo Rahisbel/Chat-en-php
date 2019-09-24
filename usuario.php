@@ -1,6 +1,16 @@
 <?php
+	
+	session_start();
+	
+	if(isset($_SESSION["administrador"])){
+        if($_SESSION["administrador"]==1){
+            header("location:administrador.php");
+        }
+    }else{
+        header("location:cerrar.php");
+    }
 
-	echo "Soy usuario";
+    echo "Soy usuario";
 
 ?>
 

@@ -1,5 +1,15 @@
 <?php
 
+	session_start();
+	
+	if(isset($_SESSION["administrador"])){
+        if($_SESSION["administrador"]==0){
+            header("location:usuario.php");
+        }
+    }else{
+        header("location:cerrar.php");
+    }
+
 	echo "Soy administrador";
 
 ?>
