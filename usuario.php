@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	    <!-- Cabecera del chat -->
+    <!-- Cabecera del chat -->
     <header class="header"></header>
     <!-- Contenedor del chat -->
     <section class="container1">
