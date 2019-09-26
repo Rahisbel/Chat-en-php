@@ -34,8 +34,9 @@
     <header class="header">
         <div class="header__user">
             <div class="header__user--info">
-                <div class="user__name">Jesus Chacon</div>
+                <div class="user__name" ><?php echo $_SESSION["nombre"]; ?></div>
                 <div class="user__state">Conectado</div>
+                <input type="hidden" class="user-name" name="" value="<?php echo $_SESSION["usuario"]; ?>">
             </div>
             <div class="header__user--icon icon-user-solid-circle"></div>
         </div>
@@ -44,23 +45,25 @@
         <article class="container__list">
             <div class="container__list--solicitud">
                 <h2>Solicitudes de Amistad</h2>
-                <ul class="scroll">
+                <ul class="scroll" id="scrollSolicitudes">
+                    <!--
                     <li>User 1 <span class="icon-add-solid add-user"></span></li>
                     <li>User 2 <span class="icon-add-solid add-user"></span></li>
                     <li>User 3 <span class="icon-add-solid add-user"></span></li>
                     <li>User 4 <span class="icon-add-solid add-user"></span></li>
+                    -->
                 </ul>
                 <button type="button" class="btn">Aceptar Solicitudes</button>
             </div>
             <div class="container__list--amigos">
                 <h2>Lista de Amigos</h2>
-                <ul class="scroll">
+                <ul class="scroll" id="scrollAmigos">
                     <li><span><span class="state-connected"></span> User 1</span> <span class="icon-trash trash-user"></span></li>
                     <li><span><span class="state-disconnected"></span> User 2</span> <span class="icon-trash trash-user"></span></li>
                     <li><span><span class="state-disconnected"></span> User 3</span> <span class="icon-trash trash-user"></span></li>
                     <li><span><span class="state-disconnected"></span> User 4</span> <span class="icon-trash trash-user"></span></li>
                 </ul>
-                <button type="button" class="btn">Agregar Contacto</button>
+                <button type="button" class="btn" id="btn-add">Agregar Contacto</button>
             </div>
         </article>
         <article class="container__chat">
@@ -92,25 +95,12 @@
             </div>
         </article>
     </section>
-<!--
-
-    <header class="header"></header>
-
-    <section class="container1">
-
-		<div class="container__title">
-            <div class="container__wrapper">
-                <h2 class="container__title--subtitle">  Usuario </h2>
-                <p class="container__title--despcription"><?php //echo "Usuario: ",$_SESSION["usuario"]; ?></p>
-
-            </div>
-
-             <form action="cerrar.php">
-				<input type="submit" class="input submit" name= "cerrar" value= "Cerrar Sesión">
-			</form>
-        </div>
-
-	</section>
--->
+    <!-- Libreria polyfill para ES6 Promisas (opcional) para IE11 -->
+    <script src="js/polyfill.min.js"></script>
+    <!-- Libreria de JavasScript para mostrar algun modal modal -->
+    <script src="js/sweetalert2.js"></script>
+    <!-- Libreria de jQuery para el uso de Ajax, eventos, etc -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/usuario.js"></script>
 	</body>
 </html>
