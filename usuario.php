@@ -46,12 +46,7 @@
             <div class="container__list--solicitud">
                 <h2>Solicitudes de Amistad</h2>
                 <ul class="scroll" id="scrollSolicitudes">
-                    <!--
-                    <li>User 1 <span class="icon-add-solid add-user"></span></li>
-                    <li>User 2 <span class="icon-add-solid add-user"></span></li>
-                    <li>User 3 <span class="icon-add-solid add-user"></span></li>
-                    <li>User 4 <span class="icon-add-solid add-user"></span></li>
-                    -->
+
                 </ul>
                 <button type="button" class="btn">Aceptar Solicitudes</button>
             </div>

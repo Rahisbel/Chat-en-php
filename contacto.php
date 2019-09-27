@@ -55,8 +55,9 @@
         }
     }
 
-    function aceptarSolicitud($de,$para,$conexion){
-
+    function aceptarSolicitud($de,$para,$connect){
+        $aceptar = mysqli_query($connect,"UPDATE amigos SET estado = 0 WHERE de = '$de' AND para = '$para'");
+        echo "aceptar";
     }
 
     function eliminarAmigo($de,$para,$conexion){
