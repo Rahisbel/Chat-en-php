@@ -53,10 +53,12 @@
             <div class="container__list--amigos">
                 <h2>Lista de Amigos</h2>
                 <ul class="scroll" id="scrollAmigos">
+                    <!--
                     <li><span><span class="state-connected"></span> User 1</span> <span class="icon-trash trash-user"></span></li>
                     <li><span><span class="state-disconnected"></span> User 2</span> <span class="icon-trash trash-user"></span></li>
                     <li><span><span class="state-disconnected"></span> User 3</span> <span class="icon-trash trash-user"></span></li>
                     <li><span><span class="state-disconnected"></span> User 4</span> <span class="icon-trash trash-user"></span></li>
+                    -->
                 </ul>
                 <button type="button" class="btn" id="btn-add">Agregar Contacto</button>
             </div>

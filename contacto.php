@@ -22,6 +22,12 @@
             case 'eliminar':
                 eliminarAmigo($de,$para,$connect);
                 break;
+            case 'verificarSolicitud':
+                verificarLista($connect,1);
+                break;
+            case 'verificarAmigos':
+                verificarLista($connect,0);
+                break;
             default:
                 throw new \Exception('Unexpected value');
                 break;
@@ -61,6 +67,18 @@
     }
 
     function eliminarAmigo($de,$para,$conexion){
+
+    }
+
+    function verificarLista($connect,$estado){
+
+        $validarLista = mysqli_num_rows(mysqli_query($connect, "SELECT estado FROM amigos WHERE estado = '$estado'"));
+
+        if($validarLista > 0){
+            echo "noLista";
+        }else{
+            echo "siLista";
+        }
 
     }
 ?>

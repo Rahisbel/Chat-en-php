@@ -1,23 +1,76 @@
 $(document).ready(()=>{
 
-    $.ajax({
-        type: 'POST',
-        url: 'listar.php',
-        data: {
-            list:'listar'
-        }
-    }).done(function (response) {
-        const data = JSON.parse(response);
-        data.data.forEach((resultados)=>{
-            if(resultados.para == $userDe){
-                $('#scrollSolicitudes').append(`<li data-user="${resultados.de}">${resultados.de} <span class="icon-add-solid add-user"></span></li>`)
+    const $userDe = document.querySelector('.user-name').value;
+
+    const verificarListaSolicitud = ()=>{
+        $.ajax({
+            type: 'POST',
+            url: 'verificarLista.php',
+            data: {
+                option: 'verificarSolicitud'
+            }
+        }).done(function (response) {
+            if(response == 'siLista'){
+                listarSolicitud();
             }
         })
-    }).always(()=>{
-        listarEventos();
-    })
+    }
 
-    const $userDe = document.querySelector('.user-name').value;
+    const verificarListaAmigos = ()=>{
+        $.ajax({
+            type: 'POST',
+            url: 'verificarLista.php',
+            data: {
+                option: 'verificarAmigos'
+            }
+        }).done(function (response) {
+            console.log(response)
+            if(response == 'siLista'){
+                listarContactos();
+            }
+        })
+    }
+
+    const listarSolicitud = ()=>{
+        $.ajax({
+            type: 'POST',
+            url: 'listar.php',
+            data: {
+                option: 'solicitud'
+            }
+        }).done(function (response) {
+            const data = JSON.parse(response);
+            data.data.forEach((resultados)=>{
+                if(resultados.para == $userDe){
+                    $('#scrollSolicitudes').append(`<li data-user="${resultados.de}">${resultados.de} <span class="icon-add-solid add-user"></span></li>`)
+                }
+            })
+        }).always(()=>{
+            listarEventos();
+        })
+    }
+
+    const listarContactos = ()=>{
+        $.ajax({
+            type: 'POST',
+            url: 'listar.php',
+            data: {
+                option: 'amigos'
+            }
+        }).done(function (response) {
+            const data = JSON.parse(response);
+
+            data.data.forEach((resultados)=>{
+                if(resultados.para == $userDe){
+                    $('#scrollAmigos').append(`<li><span><span class="state-connected"></span> ${resultados.de}</span> <span class="icon-trash trash-user"></span></li>`)
+                }else if(resultados.de == $userDe){
+                    $('#scrollAmigos').append(`<li><span><span class="state-connected"></span> ${resultados.para}</span> <span class="icon-trash trash-user"></span></li>`)
+                }
+            })
+        }).always(()=>{
+            //listarEventos();
+        })
+    }
 
     $('#btn-add').click(()=>{
         Swal.fire({
@@ -109,4 +162,8 @@ $(document).ready(()=>{
             })
         })
     }
+
+    //listarContactos();
+    verificarListaSolicitud();
+    verificarListaAmigos();
 })

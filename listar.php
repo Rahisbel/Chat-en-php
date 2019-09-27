@@ -8,16 +8,33 @@
     $init ->EstablecerConexion();
     $connect =  $init->getConexion();
 
-    $resultado = mysqli_query($connect,"SELECT * FROM amigos WHERE estado = 1");
-
-    if(!$resultado){
-        die('Error');
-    }else{
-        while($data = mysqli_fetch_assoc($resultado)){
-            $arreglo['data'][] = $data;
+    if(isset($_POST['option'])){
+        $option = $_POST['option'];
+        switch ($option){
+            case 'solicitud':
+                listar($connect,1);
+                break;
+            case 'amigos':
+                listar($connect,0);
+                break;
+            default:
+                throw new \Exception('Unexpected value');
+                break;
         }
-        echo json_encode($arreglo);
     }
-    mysqli_free_result($resultado);
-    mysqli_close($connect);
+
+    function listar($connect,$estado){
+        $resultado = mysqli_query($connect,"SELECT * FROM amigos WHERE estado = '$estado'");
+
+        if(!$resultado){
+            die('Error');
+        }else{
+            while($data = mysqli_fetch_assoc($resultado)){
+                $arreglo['data'][] = $data;
+            }
+            echo json_encode($arreglo);
+        }
+        mysqli_free_result($resultado);
+        mysqli_close($connect);
+    }
 ?>
