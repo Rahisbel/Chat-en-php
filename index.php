@@ -86,6 +86,8 @@
 									if($_SESSION["administrador"]==1){
             							header("location:administrador.php");
         							}else if($_SESSION["administrador"]==0) {
+									    $user = $_POST['user'];
+									    $validar = mysqli_query($conectar->getConexion(),"UPDATE usuarios SET estado = 1 WHERE usuario = '$user'");
             							header("location:usuario.php");
         							}
 								}

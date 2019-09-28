@@ -30,6 +30,33 @@ ul{
     align-items: center;
     padding: 1em .5em;
     cursor: pointer;
+    position: relative;
+}
+
+.header__user:hover .state_user{
+   display: block;
+}
+
+.state_user{
+    position: absolute;
+    top: 100%;
+    background-color: #262a33;
+    color: white;
+    width: 100%;
+    left: 0%;
+    display: none;
+    z-index: 0;
+    transition: all .3s;
+}
+
+.state_user li{
+    padding: .5em .5em;
+    border-bottom: 1px solid black;
+    transition: all .3s;
+}
+
+.state_user li:hover{
+    background-color: rgba(0,0,0,.2);
 }
 
 .header__user--icon{

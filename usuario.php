@@ -35,8 +35,17 @@
         <div class="header__user">
             <div class="header__user--info">
                 <div class="user__name" ><?php echo $_SESSION["nombre"]; ?></div>
-                <div class="user__state">Conectado</div>
+                <div class="user__state" id="user__state">Conectado</div>
                 <input type="hidden" class="user-name" name="" value="<?php echo $_SESSION["usuario"]; ?>">
+            </div>
+            <div class="state_user">
+                <ul>
+                    <li class="state" data-state="1">Conectado</li>
+                    <li class="state" data-state="2">Ausente</li>
+                    <li class="state" data-state="3">Ocupado</li>
+                    <li class="state" data-state="0">Desconectado</li>
+                    <li id="logout">Cerrar Sesion</li>
+                </ul>
             </div>
             <div class="header__user--icon icon-user-solid-circle"></div>
         </div>
@@ -45,21 +54,12 @@
         <article class="container__list">
             <div class="container__list--solicitud">
                 <h2>Solicitudes de Amistad</h2>
-                <ul class="scroll" id="scrollSolicitudes">
-
-                </ul>
+                <ul class="scroll" id="scrollSolicitudes"></ul>
                 <button type="button" class="btn">Aceptar Solicitudes</button>
             </div>
             <div class="container__list--amigos">
                 <h2>Lista de Amigos</h2>
-                <ul class="scroll" id="scrollAmigos">
-                    <!--
-                    <li><span><span class="state-connected"></span> User 1</span> <span class="icon-trash trash-user"></span></li>
-                    <li><span><span class="state-disconnected"></span> User 2</span> <span class="icon-trash trash-user"></span></li>
-                    <li><span><span class="state-disconnected"></span> User 3</span> <span class="icon-trash trash-user"></span></li>
-                    <li><span><span class="state-disconnected"></span> User 4</span> <span class="icon-trash trash-user"></span></li>
-                    -->
-                </ul>
+                <ul class="scroll" id="scrollAmigos"></ul>
                 <button type="button" class="btn" id="btn-add">Agregar Contacto</button>
             </div>
         </article>

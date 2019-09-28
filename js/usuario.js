@@ -1,6 +1,7 @@
 $(document).ready(()=>{
 
     const $userDe = document.querySelector('.user-name').value;
+    const $logout = document.getElementById('logout');
 
     const verificarListaSolicitud = ()=>{
         $.ajax({
@@ -24,7 +25,6 @@ $(document).ready(()=>{
                 option: 'verificarAmigos'
             }
         }).done(function (response) {
-            console.log(response)
             if(response == 'siLista'){
                 listarContactos();
             }
@@ -58,19 +58,28 @@ $(document).ready(()=>{
                 option: 'amigos'
             }
         }).done(function (response) {
+            const $listContactos = document.querySelectorAll('.list');
+            $listContactos.forEach((element)=>{
+                element.remove();
+            })
+
             const data = JSON.parse(response);
 
             data.data.forEach((resultados)=>{
                 if(resultados.para == $userDe){
-                    $('#scrollAmigos').append(`<li><span><span class="state-connected"></span> ${resultados.de}</span> <span class="icon-trash trash-user"></span></li>`)
+                    $('#scrollAmigos').append(`<li class="list"><span><span class="state-connected"></span> ${resultados.de}</span> <span class="icon-trash trash-user"></span></li>`)
                 }else if(resultados.de == $userDe){
-                    $('#scrollAmigos').append(`<li><span><span class="state-connected"></span> ${resultados.para}</span> <span class="icon-trash trash-user"></span></li>`)
+                    $('#scrollAmigos').append(`<li class="list"><span><span class="state-connected"></span> ${resultados.para}</span> <span class="icon-trash trash-user"></span></li>`)
                 }
             })
         }).always(()=>{
             //listarEventos();
         })
     }
+
+    $logout.addEventListener('click',()=>{
+        document.location = "cerrar.php";
+    })
 
     $('#btn-add').click(()=>{
         Swal.fire({
@@ -122,6 +131,54 @@ $(document).ready(()=>{
         })
     }
 
+    const mostrarEstado = ()=>{
+        $.ajax({
+            type: 'POST',
+            url: 'estado.php',
+            data: {
+                user: $userDe,
+            }
+        }).done((response)=>{
+            const $mostrarEstado = document.getElementById('user__state');
+            const data = JSON.parse(response);
+
+            switch (data.data[0].estado) {
+                case '1':
+                    $mostrarEstado.textContent = 'Conectado';
+                    break;
+                case '2':
+                    $mostrarEstado.textContent = 'Ausente';
+                    break;
+                case '3':
+                    $mostrarEstado.textContent = 'Ocupado';
+                    break;
+                case '0':
+                    $mostrarEstado.textContent = 'Desconectado';
+                    break;
+            }
+        })
+    }
+
+    const cambiarEstado = ()=>{
+        const $listaEstado = document.querySelectorAll('.state');
+
+        $listaEstado.forEach((element)=>{
+            element.addEventListener('click',()=>{
+                console.log(element.dataset.state)
+                $.ajax({
+                    type: 'POST',
+                    url: 'cambiarEstado.php',
+                    data: {
+                        user: $userDe,
+                        state: element.dataset.state
+                    }
+                }).done(()=>{
+                    mostrarEstado();
+                })
+            })
+        })
+    }
+
     const listarEventos = ()=>{
         const $listaUsers = Array.prototype.slice.apply(document.querySelectorAll('.add-user'));
         const $user = Array.prototype.slice.apply(document.querySelectorAll('#scrollSolicitudes li'));
@@ -155,7 +212,7 @@ $(document).ready(()=>{
                                 timer: 1500
                             })
                         }).always(()=>{
-
+                            listarContactos();
                         })
                     }
                 })
@@ -163,7 +220,8 @@ $(document).ready(()=>{
         })
     }
 
-    //listarContactos();
+    mostrarEstado();
     verificarListaSolicitud();
     verificarListaAmigos();
+    cambiarEstado();
 })
