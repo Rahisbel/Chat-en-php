@@ -67,19 +67,37 @@ $(document).ready(()=>{
 
             data.data.forEach((resultados)=>{
                 if(resultados.para == $userDe){
-                    $('#scrollAmigos').append(`<li class="list"><span><span class="state-connected"></span> ${resultados.de}</span> <span class="icon-trash trash-user"></span></li>`)
+                    $('#scrollAmigos').append(`<li class="list"><span><span class="state-users" data-user="${resultados.de}"></span> ${resultados.de}</span> <span class="icon-trash trash-user"></span></li>`)
                 }else if(resultados.de == $userDe){
-                    $('#scrollAmigos').append(`<li class="list"><span><span class="state-connected"></span> ${resultados.para}</span> <span class="icon-trash trash-user"></span></li>`)
+                    $('#scrollAmigos').append(`<li class="list"><span><span class="state-users" data-user="${resultados.para}"></span> ${resultados.para}</span> <span class="icon-trash trash-user"></span></li>`)
                 }
             })
         }).always(()=>{
-            //listarEventos();
+            verEstado();
+            deleteUser();
         })
     }
 
-    $logout.addEventListener('click',()=>{
-        document.location = "cerrar.php";
-    })
+    const verEstado = ()=>{
+        $.ajax({
+            type: 'POST',
+            url: 'listarUsers.php',
+            data: {
+                option: 'listar'
+            }
+        }).done((response)=>{
+            const data = JSON.parse(response)
+            const $listadoContactos = document.querySelectorAll('.state-users');
+
+            $listadoContactos.forEach((element)=>{
+                data.data.forEach((resultados)=>{
+                    if(element.dataset.user == resultados.usuario){
+                        element.classList.add('user-'+resultados.estado);
+                    }
+                })
+            })
+        })
+    }
 
     $('#btn-add').click(()=>{
         Swal.fire({
@@ -159,23 +177,63 @@ $(document).ready(()=>{
         })
     }
 
+    const opcionesEstado = (estado,opcion)=>{
+        $.ajax({
+            type: 'POST',
+            url: 'cambiarEstado.php',
+            data: {
+                user: $userDe,
+                state: estado,
+                option: opcion
+            }
+        }).done(()=>{
+            mostrarEstado();
+        })
+    }
+
     const cambiarEstado = ()=>{
         const $listaEstado = document.querySelectorAll('.state');
 
         $listaEstado.forEach((element)=>{
             element.addEventListener('click',()=>{
-                console.log(element.dataset.state)
+                opcionesEstado(element.dataset.state,"cambiar");
+            })
+        })
+    }
+
+    $logout.addEventListener('click',()=>{
+        opcionesEstado(0,"logout");
+        document.location = "cerrar.php";
+    })
+
+    const confirmacion = (valueUser,$user,index,opcion,mensaje,mensaje2)=>{
+        Swal.fire({
+            type: 'info',
+            title: mensaje + valueUser,
+            showCancelButton: true,
+            confirmButtonText: 'Enviar',
+            showLoaderOnConfirm: true,
+            preConfirm: ()=>{
                 $.ajax({
                     type: 'POST',
-                    url: 'cambiarEstado.php',
+                    url: "contacto.php",
                     data: {
-                        user: $userDe,
-                        state: element.dataset.state
+                        de: valueUser,
+                        para: $userDe,
+                        option: opcion
                     }
                 }).done(()=>{
-                    mostrarEstado();
+                    $user[index].remove();
+                    Swal.fire({
+                        type: 'success',
+                        title: mensaje2,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }).always(()=>{
+                    listarContactos();
                 })
-            })
+            }
         })
     }
 
@@ -188,34 +246,25 @@ $(document).ready(()=>{
                 let index = $listaUsers.indexOf(e.target);
                 let valueUser = $user[index].dataset.user;
 
-                Swal.fire({
-                    type: 'info',
-                    title: `Acpetar Solicitu de ${valueUser}`,
-                    showCancelButton: true,
-                    confirmButtonText: 'Enviar',
-                    showLoaderOnConfirm: true,
-                    preConfirm: (user)=>{
-                        $.ajax({
-                            type: 'POST',
-                            url: "contacto.php",
-                            data: {
-                                de: valueUser,
-                                para: $userDe,
-                                option: "aceptar"
-                            }
-                        }).done(()=>{
-                            $user[index].remove();
-                            Swal.fire({
-                                type: 'success',
-                                title: `Agregado a tu lista de contactos.`,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }).always(()=>{
-                            listarContactos();
-                        })
-                    }
-                })
+                confirmacion(valueUser,$user,index,"aceptar","Aceptar Solicitud de ","Agregado a tu lista de amigos");
+
+            })
+        })
+    }
+
+    const deleteUser = ()=>{
+
+        const $trashIcon = Array.prototype.slice.apply(document.querySelectorAll('.trash-user'));
+        const $user = Array.prototype.slice.apply(document.querySelectorAll('.state-users'));
+
+        console.log($trashIcon)
+        $trashIcon.forEach((element)=>{
+            element.addEventListener('click',(e)=>{
+                let index = $trashIcon.indexOf(e.target);
+                let valueUser = $user[index].dataset.user;
+
+                confirmacion(valueUser,$user,index,"eliminar","Eliminar de contactos a ","Eliminado de la la lista de amigos");
+
             })
         })
     }

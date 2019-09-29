@@ -117,16 +117,17 @@ ul{
     color: green;
 }
 
-.state-disconnected,
-.state-connected{
+.state-users{
     display: inline-block;
     width: 10px;
     height: 10px;
     border-radius: 50%;
 }
 
-.state-disconnected{ background-color: gray; }
-.state-connected{ background-color: green; }
+.user-0{ background-color: gray; }
+.user-1{ background-color: green; }
+.user-2{ background-color: orange; }
+.user-3{ background-color: red; }
 
 .container__list--amigos ul li .trash-user{
     color: red;

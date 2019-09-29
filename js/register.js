@@ -9,10 +9,11 @@ $(document).ready(()=>{
     const $age = document.getElementById('age');
     const $sex = document.getElementsByName('sex');
     const $btn_register = document.getElementById('btn-register');
+    const $registro = document.getElementById('registro');
 
     const emailValidation = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-    $btn_register.addEventListener('click',()=>{
+    const validationRegister = ()=>{
         let error = '';
         let contRadio = 0;
         let value_sex = "";
@@ -95,5 +96,16 @@ $(document).ready(()=>{
                 html: `<ul style="list-style: none;">${error}</ul>`,
             })
         }
+    }
+
+    $btn_register.addEventListener('click',(e)=>{
+        e.preventDefault();
+        validationRegister();
     })
+
+    $registro.addEventListener('submit',(e)=>{
+        e.preventDefault();
+        validationRegister();
+    })
+
 })

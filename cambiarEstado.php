@@ -11,8 +11,32 @@
     if (isset($_POST['user'])){
         $user = $_POST['user'];
         $estado = $_POST['state'];
+        $option = $_POST['option'];
 
+        switch ($option){
+            case 'cambiar':
+                cambiarEstado($user,$estado,$connect);
+                break;
+            case 'logout':
+                cerrarSesion($user,$estado,$connect);
+                break;
+            default:
+                throw new \Exception('Unexpected value');
+                break;
+        }
+
+    }
+
+    function cambiarEstado($user,$estado,$connect){
         $resultado = mysqli_query($connect,"UPDATE usuarios SET estado = $estado WHERE usuario = '$user'");
+
+        echo "actualizad";
+        mysqli_free_result($resultado);
+        mysqli_close($connect);
+    }
+
+    function cerrarSesion($user,$estado,$connect){
+        $resultado = mysqli_query($connect,"UPDATE usuarios SET estado = 0 WHERE usuario = '$user'");
 
         echo "actualizad";
         mysqli_free_result($resultado);

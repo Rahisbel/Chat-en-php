@@ -66,8 +66,9 @@
         echo "aceptar";
     }
 
-    function eliminarAmigo($de,$para,$conexion){
-
+    function eliminarAmigo($de,$para,$connect){
+        $eliminar = mysqli_query($connect,"DELETE FROM amigos WHERE de = '$de' AND para = '$para'");
+        echo "eliminar";
     }
 
     function verificarLista($connect,$estado){

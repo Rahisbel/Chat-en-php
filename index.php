@@ -55,97 +55,97 @@
                     <li class="form__list">Register</li>
                 </ul>
                 <!-- Formulario General -->
-                <form action="" class="form" method="POST">
+                <div class="form">
                    <!-- Contenedor del Formulario de Inicio de Session -->
-                    <div class="form__user active">
-                        <h2>Iniciar Sesion</h2>
-                        <div class="form__user--wrapper">
-                            <input type="text" class="input username" name="user" id="user-login" placeholder="Usuario" required="required">
-                            <input type="password" class="input password" name="pass" id="pass-login" placeholder="Contrasena" required="required">
-                            <button type="submit" class="input submit" name="login" id="btn-login">Iniciar Sesion</button>
+                    <form action="" method="POST">
+                        <div class="form__user active">
+                            <h2>Iniciar Sesion</h2>
+                            <div class="form__user--wrapper">
+                                <input type="text" class="input username" name="user" id="user-login" placeholder="Usuario" required="required">
+                                <input type="password" class="input password" name="pass" id="pass-login" placeholder="Contrasena" required="required">
+                                <button type="submit" class="input submit" name="login" id="btn-login">Iniciar Sesion</button>
+                            </div>
                         </div>
-                    </div>
-					
-					<?php
+                        <?php
+                            if(isset($_POST["login"])){
+                                if ((isset($_POST["user"]) && $_POST["user"]!= null) && (isset($_POST["pass"]) && $_POST["pass"] != null)) {
+                                    include("conexionBD.php");
+                                    $conectar = new Conexion();
+                                    $conectar->EstablecerConexion();
+                                    $query = "select * from usuarios where usuario='".$_POST["user"]."'";
+                                    $resultado = $conectar->getConexion()->query($query);
 
-						if(isset($_POST["login"])){
-							if ((isset($_POST["user"]) && $_POST["user"]!= null) && (isset($_POST["pass"]) && $_POST["pass"] != null)) {
-								include("conexionBD.php");
-								$conectar = new Conexion();
-								$conectar->EstablecerConexion();
-								$query = "select * from usuarios where usuario='".$_POST["user"]."'";
-								$resultado = $conectar->getConexion()->query($query);
+                                    $_SESSION["usuario"] = $_POST["user"];
 
-								$_SESSION["usuario"] = $_POST["user"];
+                                    if($resultado->num_rows>0){
+                                        $fila = mysqli_fetch_array($resultado,MYSQLI_ASSOC);
+                                        if ($fila["clave"] == $_POST["pass"]) {
+                                            $_SESSION=$fila;
 
-							if($resultado->num_rows>0){
-								$fila = mysqli_fetch_array($resultado,MYSQLI_ASSOC);
-								if ($fila["clave"] == $_POST["pass"]) {
-									$_SESSION=$fila;
+                                            if($_SESSION["administrador"]==1){
+                                                header("location:administrador.php");
+                                            }else if($_SESSION["administrador"]==0) {
+                                                $user = $_POST['user'];
+                                                $validar = mysqli_query($conectar->getConexion(),"UPDATE usuarios SET estado = 1 WHERE usuario = '$user'");
+                                                header("location:usuario.php");
+                                            }
+                                        }
+                                        else{
+                                            echo "Datos invalidos";
+                                        }
+                                    }
+                                    else{
+                                        echo "Usuario no registrado";
+                                    }
 
-									if($_SESSION["administrador"]==1){
-            							header("location:administrador.php");
-        							}else if($_SESSION["administrador"]==0) {
-									    $user = $_POST['user'];
-									    $validar = mysqli_query($conectar->getConexion(),"UPDATE usuarios SET estado = 1 WHERE usuario = '$user'");
-            							header("location:usuario.php");
-        							}
-								}
-								else{
-									echo "Datos invalidos";
-								}
-							}
-							else{
-								echo "Usuario no registrado";
-							}
-
-							}
-							else{
-								echo "Campos vacios";
-							}
-						}
-
-					?>
-
-                    <!-- Contenedor del Formulario de Registro -->
-                    <div class="form__user">
-                        <h2>Registro</h2>
-                        <!-- Inputs de, Nombre, Usuario, Password y Email -->
-                        <div class="form__user--wrapper">
-                            <input type="text" class="input name" name="name" id="name" placeholder="Nombre Completo">
-                            <input type="text" class="input username" name="username" id="user" placeholder="Usuario">
-                            <input type="password" class="input password" name="password" id="pass" placeholder="Contrasena">
-                            <input type="email" class="input email" name="email" id="email" placeholder="Correo">
-                        <!-- Radio Button de Fecha de Nacimiento -->
-                        <label for="" class="date">Fecha de Nacimiento:</label>
-                        <div class="fecha">
-                            <select name="dias" id="dias">
-                                <option value="Dias" disabled selected>Dias</option>
-                                <!-- La lista se genera con JavaScript en el Archivo app.js-->
-                            </select>
-                            <select name="mes" id="mes">
-                                <option value="Mes" disabled selected>Mes</option>
-                                <!-- La lista se genera con JavaScript en el Archivo app.js-->
-                            </select>
-                            <select name="age" id="age">
-                                <option value="Age" disabled selected>Age</option>
-                                <!-- La lista se genera con JavaScript en el Archivo app.js-->
-                            </select>
+                                }
+                                else{
+                                    echo "Campos vacios";
+                                }
+                            }
+                        ?>
+                    </form>
+                    <form action="" method="POST" id="registro">
+                        <!-- Contenedor del Formulario de Registro -->
+                        <div class="form__user">
+                            <h2>Registro</h2>
+                            <!-- Inputs de, Nombre, Usuario, Password y Email -->
+                            <div class="form__user--wrapper">
+                                <input type="text" class="input name" name="name" id="name" placeholder="Nombre Completo">
+                                <input type="text" class="input username" name="username" id="user" placeholder="Usuario">
+                                <input type="password" class="input password" name="password" id="pass" placeholder="Contrasena">
+                                <input type="email" class="input email" name="email" id="email" placeholder="Correo">
+                                <!-- Radio Button de Fecha de Nacimiento -->
+                                <label for="" class="date">Fecha de Nacimiento:</label>
+                                <div class="fecha">
+                                    <select name="dias" id="dias">
+                                        <option value="Dias" disabled selected>Dias</option>
+                                        <!-- La lista se genera con JavaScript en el Archivo app.js-->
+                                    </select>
+                                    <select name="mes" id="mes">
+                                        <option value="Mes" disabled selected>Mes</option>
+                                        <!-- La lista se genera con JavaScript en el Archivo app.js-->
+                                    </select>
+                                    <select name="age" id="age">
+                                        <option value="Age" disabled selected>Age</option>
+                                        <!-- La lista se genera con JavaScript en el Archivo app.js-->
+                                    </select>
+                                </div>
+                                <!-- Radio Buttons de Sexo -->
+                                <label for="men" class="radio">
+                                    Sexo:
+                                    <input type="radio" name="sex" value="H" id="men">
+                                    Hombre
+                                </label>
+                                <label for="woman">
+                                    <input type="radio" name="sex" value="M" id="woman">
+                                    Mujer
+                                </label>
+                                <input type="submit" id="btn-register" value="Registrarme" name="register" class="input submit">
+                            </div>
                         </div>
-                        <!-- Radio Buttons de Sexo -->
-                        <label for="men" class="radio">
-                            Sexo: 
-                            <input type="radio" name="sex" value="H" id="men">
-                            Hombre
-                        </label>
-                        <label for="woman">
-                            <input type="radio" name="sex" value="M" id="woman">
-                            Mujer
-                        </label>
-                        <button type="button" class="input submit" name="register" id="btn-register">Registrarme</button>
-                       </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
