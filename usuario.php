@@ -65,8 +65,9 @@
         </article>
         <article class="container__chat">
             <div class="container__chat--solo">
-                <h2>Chat con <span>User 1</span></h2>
+                <h2>Chat con <span id="chat__user">. . .</span></h2>
                 <ul>
+                    <!--
                     <li class="right">Message 1 <span class="icon-user-solid-circle"></span></li>
                     <li class="left"><span class="icon-user-solid-circle"></span> Message 2</li>
                     <li class="right">Message 1 <span class="icon-user-solid-circle"></span></li>
@@ -75,8 +76,9 @@
                     <li class="left"><span class="icon-user-solid-circle"></span> Message 2</li>
                     <li class="right">Message 1 <span class="icon-user-solid-circle"></span></li>
                     <li class="left"><span class="icon-user-solid-circle"></span> Message 2</li>
+                    -->
                 </ul>
-                <div class="chat--text">
+                <div class="chat--text" id="chat--text">
                     <input type="text" name="txt" id="txt" placeholder="Ingrese un Mensaje">
                     <span><i class="icon-send"></i></span>
                 </div>

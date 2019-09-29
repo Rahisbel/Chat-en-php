@@ -2,6 +2,8 @@ $(document).ready(()=>{
 
     const $userDe = document.querySelector('.user-name').value;
     const $logout = document.getElementById('logout');
+    const $chat = document.getElementById('txt');
+    const $chatUsuario = document.getElementById('chat__user');
 
     const verificarListaSolicitud = ()=>{
         $.ajax({
@@ -67,14 +69,15 @@ $(document).ready(()=>{
 
             data.data.forEach((resultados)=>{
                 if(resultados.para == $userDe){
-                    $('#scrollAmigos').append(`<li class="list"><span><span class="state-users" data-user="${resultados.de}"></span> ${resultados.de}</span> <span class="icon-trash trash-user"></span></li>`)
+                    $('#scrollAmigos').append(`<li class="list"><span class="list-user"><span class="state-users" data-id="${resultados.id}" data-user="${resultados.de}"></span> ${resultados.de}</span> <span class="icon-trash trash-user"></span></li>`)
                 }else if(resultados.de == $userDe){
-                    $('#scrollAmigos').append(`<li class="list"><span><span class="state-users" data-user="${resultados.para}"></span> ${resultados.para}</span> <span class="icon-trash trash-user"></span></li>`)
+                    $('#scrollAmigos').append(`<li class="list"><span class="list-user"><span class="state-users" data-id="${resultados.id}" data-user="${resultados.para}"></span> ${resultados.para}</span> <span class="icon-trash trash-user"></span></li>`)
                 }
             })
         }).always(()=>{
             verEstado();
             deleteUser();
+            chatUser();
         })
     }
 
@@ -93,6 +96,7 @@ $(document).ready(()=>{
                 data.data.forEach((resultados)=>{
                     if(element.dataset.user == resultados.usuario){
                         element.classList.add('user-'+resultados.estado);
+                        element.setAttribute('data-state',resultados.estado);
                     }
                 })
             })
@@ -188,6 +192,8 @@ $(document).ready(()=>{
             }
         }).done(()=>{
             mostrarEstado();
+        }).always((response)=>{
+            if(response == "cerrar") document.location = "cerrar.php";
         })
     }
 
@@ -203,7 +209,7 @@ $(document).ready(()=>{
 
     $logout.addEventListener('click',()=>{
         opcionesEstado(0,"logout");
-        document.location = "cerrar.php";
+        //document.location = "cerrar.php"
     })
 
     const confirmacion = (valueUser,$user,index,opcion,mensaje,mensaje2)=>{
@@ -257,7 +263,6 @@ $(document).ready(()=>{
         const $trashIcon = Array.prototype.slice.apply(document.querySelectorAll('.trash-user'));
         const $user = Array.prototype.slice.apply(document.querySelectorAll('.state-users'));
 
-        console.log($trashIcon)
         $trashIcon.forEach((element)=>{
             element.addEventListener('click',(e)=>{
                 let index = $trashIcon.indexOf(e.target);
@@ -268,6 +273,30 @@ $(document).ready(()=>{
             })
         })
     }
+
+    const chatUser = ()=>{
+        const $chatUser = Array.prototype.slice.apply(document.querySelectorAll('.list-user'));
+        const $stateUser = Array.prototype.slice.apply(document.querySelectorAll('.state-users'));
+
+        $chatUser.forEach((element)=>{
+            element.addEventListener('click',(e)=>{
+                let index = $chatUser.indexOf(e.target);
+
+                if($stateUser[index].dataset.state != 0){
+                    console.log($stateUser[index].dataset.user)
+                    $chatUsuario.textContent = $stateUser[index].dataset.user;
+                    $chat.setAttribute('data-id',$stateUser[index].dataset.id);
+                }else{
+                    console.log('no se puede')
+                }
+            })
+        })
+    }
+
+    $chat.addEventListener('keypress',(e)=>{
+        if(e.keyCode == 13 ) console.log(e.keyCode)
+
+    })
 
     mostrarEstado();
     verificarListaSolicitud();

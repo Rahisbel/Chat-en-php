@@ -30,16 +30,15 @@
     function cambiarEstado($user,$estado,$connect){
         $resultado = mysqli_query($connect,"UPDATE usuarios SET estado = $estado WHERE usuario = '$user'");
 
-        echo "actualizad";
-        mysqli_free_result($resultado);
+        echo "actualizado";
+        //mysqli_free_result($resultado);
         mysqli_close($connect);
     }
 
     function cerrarSesion($user,$estado,$connect){
-        $resultado = mysqli_query($connect,"UPDATE usuarios SET estado = 0 WHERE usuario = '$user'");
-
-        echo "actualizad";
-        mysqli_free_result($resultado);
+        $resultado = mysqli_query($connect,"UPDATE usuarios SET estado = 0 WHERE usuario = '$user'");;
+        echo "cerrar";
+        //mysqli_free_result($resultado);
         mysqli_close($connect);
     }
 ?>

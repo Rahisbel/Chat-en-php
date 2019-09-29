@@ -101,11 +101,12 @@ ul{
 .container__list--solicitud ul li,
 .container__list--amigos ul li{
     color: white;
-    padding: 1em .5em;
+
     cursor: pointer;
     transition: all .3s;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .container__list--solicitud ul li:hover,
@@ -115,6 +116,13 @@ ul{
 
 .container__list--solicitud ul li span{
     color: green;
+}
+
+.list-user{
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 1em .5em;
 }
 
 .state-users{
@@ -167,6 +175,9 @@ ul{
     background-color: #e6eaef;
     width: 45%;
     height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .container__chat--solo h2{
     padding: .3em 0;
