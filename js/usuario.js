@@ -57,6 +57,7 @@ $(document).ready(()=>{
             type: 'POST',
             url: 'listar.php',
             data: {
+                id: '',
                 option: 'solicitud'
             }
         }).done(function (response) {
@@ -76,6 +77,7 @@ $(document).ready(()=>{
             type: 'POST',
             url: 'listar.php',
             data: {
+                id: '',
                 option: 'amigos'
             }
         }).done(function (response) {
@@ -100,8 +102,18 @@ $(document).ready(()=>{
         })
     }
 
-    const listarMensajes = ()=>{
-
+    const listarMensajes = (id,sms)=>{
+        $.ajax({
+            type: 'POST',
+            url: 'listar.php',
+            data: {
+                id: id,
+                option: 'mensajes'
+            }
+        }).done((response)=>{
+            console.log(response)
+            //const data = JSON.parse(response);
+        })
     }
 
     const verEstado = ()=>{
@@ -317,7 +329,22 @@ $(document).ready(()=>{
 
     $chat.addEventListener('keypress',(e)=>{
         if(e.keyCode == 13 ) {
-
+            console.log("hl")
+            $.ajax({
+                type: 'POST',
+                url: 'mensajes.php',
+                data:{
+                    id: $chat.dataset.id,
+                    sms: $chat.value,
+                    user: $userDe,
+                    option: 'guardar'
+                }
+            }).done((response)=>{
+                console.log(response)
+            }).always(()=>{
+                $chat.value = '';
+            })
+            //listarMensajes($chat.dataset.id,$chat.value);
         }
     })
 
@@ -325,4 +352,5 @@ $(document).ready(()=>{
     verificarListaSolicitud();
     verificarListaAmigos();
     cambiarEstado();
+
 })

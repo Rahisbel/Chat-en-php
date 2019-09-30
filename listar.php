@@ -10,12 +10,17 @@
 
     if(isset($_POST['option'])){
         $option = $_POST['option'];
+        $id = $_POST['id'];
+
         switch ($option){
             case 'solicitud':
                 listar($connect,1);
                 break;
             case 'amigos':
                 listar($connect,0);
+                break;
+            case 'mensajes':
+                listarMensajes($connect);
                 break;
             default:
                 throw new \Exception('Unexpected value');
@@ -36,5 +41,10 @@
         }
         mysqli_free_result($resultado);
         mysqli_close($connect);
+    }
+
+    function listarMensajes($connect){
+
+        echo 'MENSAJES';
     }
 ?>
