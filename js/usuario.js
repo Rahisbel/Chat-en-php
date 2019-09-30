@@ -33,6 +33,20 @@ $(document).ready(()=>{
         })
     }
 
+    const verificarListaMensajes = ()=>{
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: {
+                option: 'verificarMensaje'
+            }
+        }).done((response)=>{
+            if(response == 'siSMS'){
+
+            }
+        })
+    }
+
     const listarSolicitud = ()=>{
         $.ajax({
             type: 'POST',
@@ -78,6 +92,12 @@ $(document).ready(()=>{
             verEstado();
             deleteUser();
             chatUser();
+        })
+    }
+
+    const listarMensajes = ()=>{
+        $.ajax({
+            type: 'POST',
         })
     }
 
@@ -209,7 +229,6 @@ $(document).ready(()=>{
 
     $logout.addEventListener('click',()=>{
         opcionesEstado(0,"logout");
-        //document.location = "cerrar.php"
     })
 
     const confirmacion = (valueUser,$user,index,opcion,mensaje,mensaje2)=>{
@@ -294,8 +313,10 @@ $(document).ready(()=>{
     }
 
     $chat.addEventListener('keypress',(e)=>{
-        if(e.keyCode == 13 ) console.log(e.keyCode)
-
+        if(e.keyCode == 13 ) {
+            console.log(e.keyCode)
+            console.log($chat.value)
+        }
     })
 
     mostrarEstado();
