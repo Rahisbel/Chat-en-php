@@ -9,6 +9,7 @@
     $connect =  $init->getConexion();
 
     if(isset($_POST['option'])){
+        $id = $_POST['id'];
         $option = $_POST['option'];
         switch($option){
             case 'verificarSolicitud':
@@ -16,6 +17,9 @@
                 break;
             case 'verificarAmigos':
                 verificarLista($connect,0);
+                break;
+            case 'verificarMensajes':
+                verificarMensajes($connect,$id);
                 break;
             default:
                 throw new \Exception('Unexpected value');
@@ -33,6 +37,18 @@
             echo "siLista";
         }else{
             echo "noLista";
+        }
+
+    }
+
+    function verificarMensajes($connect,$id){
+
+        $validarMensajes = mysqli_num_rows(mysqli_query($connect, "SELECT id_amigo FROM mensaes WHERE id_amigo = '$id'"));
+
+        if($validarMensajes > 0){
+            echo "siSMS";
+        }else{
+            echo "noSMS";
         }
 
     }

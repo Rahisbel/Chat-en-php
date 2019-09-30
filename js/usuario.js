@@ -10,6 +10,7 @@ $(document).ready(()=>{
             type: 'POST',
             url: 'verificarLista.php',
             data: {
+                id: '',
                 option: 'verificarSolicitud'
             }
         }).done(function (response) {
@@ -24,6 +25,7 @@ $(document).ready(()=>{
             type: 'POST',
             url: 'verificarLista.php',
             data: {
+                id: '',
                 option: 'verificarAmigos'
             }
         }).done(function (response) {
@@ -33,16 +35,19 @@ $(document).ready(()=>{
         })
     }
 
-    const verificarListaMensajes = ()=>{
+    const verificarListaMensajes = (id,sms)=>{
         $.ajax({
             type: 'POST',
-            url: '',
+            url: 'verificarLista.php',
             data: {
-                option: 'verificarMensaje'
+                id: id,
+                option: 'verificarMensajes'
             }
         }).done((response)=>{
             if(response == 'siSMS'){
-
+                console.log('si ahi mensajes')
+            }else{
+                console.log("no ahi mensajes")
             }
         })
     }
@@ -96,9 +101,7 @@ $(document).ready(()=>{
     }
 
     const listarMensajes = ()=>{
-        $.ajax({
-            type: 'POST',
-        })
+
     }
 
     const verEstado = ()=>{
@@ -302,9 +305,9 @@ $(document).ready(()=>{
                 let index = $chatUser.indexOf(e.target);
 
                 if($stateUser[index].dataset.state != 0){
-                    console.log($stateUser[index].dataset.user)
                     $chatUsuario.textContent = $stateUser[index].dataset.user;
                     $chat.setAttribute('data-id',$stateUser[index].dataset.id);
+                    verificarListaMensajes($chat.dataset.id,$chat.value)
                 }else{
                     console.log('no se puede')
                 }
@@ -314,8 +317,7 @@ $(document).ready(()=>{
 
     $chat.addEventListener('keypress',(e)=>{
         if(e.keyCode == 13 ) {
-            console.log(e.keyCode)
-            console.log($chat.value)
+
         }
     })
 
