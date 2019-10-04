@@ -66,31 +66,28 @@
         <article class="container__chat">
             <div class="container__chat--solo">
                 <h2>Chat con <span id="chat__user">. . .</span></h2>
-                <ul>
-                    <!--
-                    <li class="right">Message 1 <span class="icon-user-solid-circle"></span></li>
-                    <li class="left"><span class="icon-user-solid-circle"></span> Message 2</li>
-                    <li class="right">Message 1 <span class="icon-user-solid-circle"></span></li>
-                    <li class="left"> <span class="icon-user-solid-circle"></span> Message 2</li>
-                    <li class="right">Message 1 <span class="icon-user-solid-circle"></span></li>
-                    <li class="left"><span class="icon-user-solid-circle"></span> Message 2</li>
-                    <li class="right">Message 1 <span class="icon-user-solid-circle"></span></li>
-                    <li class="left"><span class="icon-user-solid-circle"></span> Message 2</li>
-                    -->
-                </ul>
+                <div class="container--mensajes">
+                    <ul id="mensajes"></ul>
+                </div>
                 <div class="chat--text" id="chat--text">
                     <input type="text" name="txt" id="txt" placeholder="Ingrese un Mensaje">
                     <span><i class="icon-send"></i></span>
                 </div>
             </div>
             <div class="container__chat--group">
-                <h2>Group</h2>
-                <ul>
-                    <li>Message 1</li>
-                    <li>Message 2</li>
-                    <li>Message 1</li>
-                    <li>Message 2</li>
-                </ul>
+                <div class="container__title__group">
+                    <h2 id="opcion-title">Grupos</h2>
+                    <h2 id="opcion-grupo" class="opcion-grupo"></h2>
+                    <h2 id="add-user-grupo" class="icon-user-add icon"></h2>
+                </div>
+                <div class="container--grupos" id="listar-grupos">
+                    <ul id="grupos"></ul>
+                </div>
+                <div id="container--inputs">
+                    <button type="button"  class="btn" id="btn-group">Crear un Grupo</button>
+                    <input type="text" class="input-grupo" name="txt-grupo" id="txt-grupo" placeholder="Ingrese un Mensaje">
+                    <span><i class="icon-send icon" id="icon-grupo"></i></span>
+                </div>
             </div>
         </article>
     </section>

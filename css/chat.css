@@ -118,6 +118,9 @@ ul{
     color: green;
 }
 
+.container__list--solicitud .scroll li{
+    padding: 1em;
+}
 .list-user{
     display: block;
     width: 100%;
@@ -171,7 +174,8 @@ ul{
     background-color: white;
 }
 
-.container__chat--solo{
+.container__chat--solo,
+.container__chat--group{
     background-color: #e6eaef;
     width: 45%;
     height: 90%;
@@ -179,37 +183,58 @@ ul{
     flex-direction: column;
     justify-content: space-between;
 }
-.container__chat--solo h2{
+
+.container__chat--solo h2,
+.container__chat--group h2{
     padding: .3em 0;
     padding-left: 2%;
     background-color: #cdd2d9;
 }
 
-.container__chat--solo ul{
+.container__chat--solo ul,
+.container__chat--group ul{
     overflow-y: scroll;
-    max-height: 400px;
+    max-height: 420px;
+    height: 900px;
 }
-.container__chat--solo ul li{
+.container__chat--solo ul li,
+.container__chat--group ul li{
     display: flex;
-    align-items: center;
     padding: 1em .5em;
     cursor: text;
 }
-.container__chat--solo ul li:hover{
+
+.container--mensajes,
+.container--grupos{
+    height: 1000px;
+}
+
+.container__chat--solo ul li i,
+.container__chat--group ul li i{
+    padding: .5em 1em;
+}
+
+.container__chat--solo ul li:hover,
+.container__chat--group ul li:hover{
     background-color: rgba(0,0,0,.5);
 }
-.container__chat--solo ul li span{
+.container__chat--solo ul li .usuario{
     font-size: 15px;
+    font-weight: 900;
+    color: rgba(0,0,0,.3);
 }
-.container__chat--solo ul .right{
-    justify-content: flex-end;
-}
+
 .chat--text{
     width: 100%;
     display: flex;
     position: relative;
 }
 
+.text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .chat--text input{
     width: 100%;
     padding: .8em .2em;
@@ -237,7 +262,22 @@ ul{
     font-size: 10px;
 }
 .container__chat--group{
-    background-color: brown;
+
     width: 45%;
     height: 90%;
+}
+
+.input-grupo,
+.icon,
+.btn-disabled,
+.title-grupo,
+.opcion-grupo{
+    display: none;
+}
+
+.container__title__group{
+    display: flex;
+    justify-content: space-between;
+    background-color: #cdd2d9;
+    padding: 0 1em;
 }

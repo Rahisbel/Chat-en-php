@@ -20,7 +20,7 @@
                 listar($connect,0);
                 break;
             case 'mensajes':
-                listarMensajes($connect);
+                listarMensajes($connect,$id);
                 break;
             default:
                 throw new \Exception('Unexpected value');
@@ -43,8 +43,18 @@
         mysqli_close($connect);
     }
 
-    function listarMensajes($connect){
+    function listarMensajes($connect,$id){
+        $resultado = mysqli_query($connect,"SELECT * FROM mensajes WHERE id_amigo = '$id'");
 
-        echo 'MENSAJES';
+        if(!$resultado){
+            die('Error');
+        }else{
+            while($data = mysqli_fetch_assoc($resultado)){
+                $arreglo['data'][] = $data;
+            }
+            echo json_encode($arreglo);
+        }
+        mysqli_free_result($resultado);
+        mysqli_close($connect);
     }
 ?>

@@ -62,13 +62,36 @@
     }
 
     function aceptarSolicitud($de,$para,$connect){
-        $aceptar = mysqli_query($connect,"UPDATE amigos SET estado = 0 WHERE de = '$de' AND para = '$para'");
-        echo "aceptar";
+        $aceptar = mysqli_num_rows(mysqli_query($connect,"SELECT de, para FROM amigos WHERE de = '$de' AND para = '$para'"));
+        if($aceptar > 0){
+            mysqli_query($connect,"UPDATE amigos SET estado = 0 WHERE de = '$para' AND para = '$de'");
+            echo "aceptar";
+        }
+
+        $aceptar = mysqli_num_rows(mysqli_query($connect,"SELECT de, para FROM amigos WHERE de = '$para' AND para = '$de'"));
+
+        if($aceptar > 0){
+            mysqli_query($connect,"UPDATE amigos SET estado = 0 WHERE de = '$para' AND para = '$de'");
+            echo "aceptar";
+        }
+
+        if($aceptar == 0) echo "noAceptar";
     }
 
     function eliminarAmigo($de,$para,$connect){
-        $eliminar = mysqli_query($connect,"DELETE FROM amigos WHERE de = '$de' AND para = '$para'");
-        echo "eliminar";
+        $eliminar = mysqli_num_rows(mysqli_query($connect, "SELECT de, para FROM amigos WHERE de = '$de' AND para = '$para'"));
+        if($eliminar > 0){
+            mysqli_query($connect,"DELETE FROM amigos WHERE de = '$de' AND para = '$para'");
+            echo "eliminar";
+        }
+
+        $eliminar = mysqli_num_rows(mysqli_query($connect, "SELECT de, para FROM amigos WHERE de = '$para' AND para = '$de'"));
+        if($eliminar > 0){
+            mysqli_query($connect,"DELETE FROM amigos WHERE de = '$para' AND para = '$de'");
+            echo "eliminar";
+        }
+
+        if($eliminar == 0) echo "noEliminado";
     }
 
     function verificarLista($connect,$estado){

@@ -4,7 +4,17 @@ $(document).ready(()=>{
     const $logout = document.getElementById('logout');
     const $chat = document.getElementById('txt');
     const $chatUsuario = document.getElementById('chat__user');
+    const $group = document.getElementById('btn-group');
 
+    const $containerInputs = document.getElementById('container--inputs');
+    const $btnGrupo = document.getElementById('btn-group');
+    const $inputGrupo = document.getElementById('txt-grupo');
+    const $iconSend = document.getElementById('icon-grupo');
+    const $titulo = document.getElementById('opcion-title');
+    const $botonSalida = document.getElementById('opcion-grupo');
+    const $addUser = document.getElementById('add-user-grupo');
+
+    let validation = false;
     const verificarListaSolicitud = ()=>{
         $.ajax({
             type: 'POST',
@@ -45,10 +55,55 @@ $(document).ready(()=>{
             }
         }).done((response)=>{
             if(response == 'siSMS'){
-                console.log('si ahi mensajes')
+                listarMensajes(id,sms);
             }else{
                 console.log("no ahi mensajes")
             }
+        })
+    }
+
+    const verificarListaGrupos = ()=>{
+        $.ajax({
+            type: 'POST',
+            url: 'grupos.php',
+            data: {
+                user: $userDe,
+                option: 'verificarLista'
+            }
+        }).done((response)=>{
+            if (response == "siGrupos"){
+                listarGrupos();
+            }
+        })
+    }
+
+    const listarGrupos = ()=>{
+        $.ajax({
+            type: 'POST',
+            url: 'grupos.php',
+            data: {
+                user: $userDe,
+                option: 'listarGrupos'
+            }
+        }).done((response)=>{
+            const $list = document.querySelectorAll('.container--grupos .right')
+
+            $list.forEach((element)=>{
+                element.remove();
+            })
+            const data = JSON.parse(response);
+
+            data.data.forEach((element)=>{
+                const templateHTML = `<li class="right name-grupo" data-grupo="${element.nombre}">
+                                        <i class="icon-user-group"></i>
+                                        <div class="text">
+                                            <p>${element.nombre}</p>
+                                        </div>
+                                    </li>`
+                $('#grupos').append(templateHTML);
+            })
+        }).always(()=>{
+            selecionarGrupo();
         })
     }
 
@@ -111,8 +166,36 @@ $(document).ready(()=>{
                 option: 'mensajes'
             }
         }).done((response)=>{
-            console.log(response)
-            //const data = JSON.parse(response);
+            const data = JSON.parse(response);
+
+            if(validation){
+                const $listMensajes = document.querySelectorAll('.container--mensajes .right');
+                $listMensajes.forEach((element)=>{
+                    element.remove();
+                })
+                const scrollElement = document.getElementById('final');
+                scrollElement.remove();
+            }
+
+
+
+            data.data.forEach((element)=>{
+                const templateHTML = `<li class="right">
+                                        <i class="icon-user-solid-circle"></i>
+                                        <div class="text">
+                                            <p>${element.mensaje}</p>
+                                            <p class="usuario">Enviado por: <span>${element.usuario}</span></p>
+                                        </div>
+                                     </li>`
+                $('#mensajes').append(templateHTML);
+            })
+            $('#mensajes').append(`<span id="final"></span>`)
+
+        }).always(()=>{
+            validation = true;
+            const scroll =  document.getElementById('final');
+            scroll.scrollIntoView(true);
+
         })
     }
 
@@ -258,22 +341,51 @@ $(document).ready(()=>{
                     type: 'POST',
                     url: "contacto.php",
                     data: {
-                        de: valueUser,
-                        para: $userDe,
+                        de: $userDe,
+                        para: valueUser,
                         option: opcion
                     }
-                }).done(()=>{
-                    $user[index].remove();
-                    Swal.fire({
-                        type: 'success',
-                        title: mensaje2,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                }).done((response)=>{
+                    if(response == "aceptar"){
+                        acceptAndDeleteFriend($user[index],mensaje2);
+                    }
+
+                    if(response == "eliminar"){
+                        acceptAndDeleteFriend($user[index],mensaje2);
+                    }
                 }).always(()=>{
                     listarContactos();
                 })
             }
+        })
+    }
+
+    const acceptAndDeleteFriend = (element,mensaje2)=>{
+        element.remove();
+        Swal.fire({
+            type: 'success',
+            title: mensaje2,
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
+    const selecionarGrupo = ()=>{
+        const $listaGrupos = document.querySelectorAll('.name-grupo');
+
+        $listaGrupos.forEach((element)=>{
+            element.addEventListener('click',()=>{
+                $('#grupos').remove();
+                $containerInputs.classList.add('chat--text');
+                $btnGrupo.classList.add('btn-disabled');
+                $addUser.classList.remove('icon');
+                $inputGrupo.classList.remove('input-grupo');
+                $inputGrupo.setAttribute('data-grupo',element.dataset.grupo);
+                $iconSend.classList.remove('icon');
+                $titulo.classList.add('title-grupo')
+                $botonSalida.classList.remove('opcion-grupo');
+                $botonSalida.classList.add('icon-arrow-thick-left');
+            })
         })
     }
 
@@ -285,7 +397,6 @@ $(document).ready(()=>{
             element.addEventListener('click',(e)=>{
                 let index = $listaUsers.indexOf(e.target);
                 let valueUser = $user[index].dataset.user;
-
                 confirmacion(valueUser,$user,index,"aceptar","Aceptar Solicitud de ","Agregado a tu lista de amigos");
 
             })
@@ -326,10 +437,80 @@ $(document).ready(()=>{
             })
         })
     }
+    $botonSalida.addEventListener('click',()=>{
+
+        $containerInputs.classList.remove('chat--text');
+        $btnGrupo.classList.remove('btn-disabled');
+        $inputGrupo.classList.add('input-grupo');
+        $addUser.classList.add('icon');
+        $inputGrupo.removeAttribute('data-grupo');
+        $iconSend.classList.add('icon');
+        $titulo.classList.remove('title-grupo')
+        $botonSalida.classList.add('opcion-grupo');
+        $botonSalida.classList.remove('icon-arrow-thick-left');
+
+        $('#listar-grupos').append(`<ul id="grupos"></ul>`);
+        listarGrupos();
+    })
+
+    $addUser.addEventListener('click',()=>{
+        //alert($inputGrupo.dataset.grupo)
+        Swal.fire({
+            title: 'Agregar un usuario al Grupo',
+            text: 'Ingrese un usuario',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Agregar',
+            showLoaderOnConfirm: true,
+            preConfirm: (name) => {
+                $.ajax({
+                    type: 'POST',
+                    url: "grupos.php",
+                    data: {
+                        name: name,
+                        user: $userDe,
+                        grupo: $inputGrupo.dataset.grupo,
+                        option: 'agregar'
+                    }
+                }).done((response) => {
+                    console.log(response)
+
+                    if (response == "guardado") {
+                        Swal.fire({
+                            type: 'success',
+                            title: "Usuario Agregado",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+
+                    if (response == "existe") {
+                        Swal.fire({
+                            type: 'info',
+                            title: "El Usuario ya esta en el Grupo!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+
+                    if (response == "noGuardar"){
+                        Swal.fire({
+                            type: 'info',
+                            title: "El Usuario no Existe o no son Amigos!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                })
+            }
+        })
+    })
 
     $chat.addEventListener('keypress',(e)=>{
         if(e.keyCode == 13 ) {
-            console.log("hl")
             $.ajax({
                 type: 'POST',
                 url: 'mensajes.php',
@@ -341,16 +522,63 @@ $(document).ready(()=>{
                 }
             }).done((response)=>{
                 console.log(response)
+
             }).always(()=>{
                 $chat.value = '';
+                verificarListaMensajes($chat.dataset.id,'s');
             })
-            //listarMensajes($chat.dataset.id,$chat.value);
         }
+    })
+
+    $group.addEventListener('click',()=>{
+        Swal.fire({
+            title: 'Crear un Grupo',
+            text: 'Ingrese un nombre',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Crear',
+            showLoaderOnConfirm: true,
+            preConfirm: (name)=>{
+                $.ajax({
+                    type: 'POST',
+                    url: "grupos.php",
+                    data: {
+                        name: name,
+                        user: $userDe,
+                        option: 'crear'
+                    }
+                }).done((response)=>{
+                    if(response == "grupoCreado"){
+                        Swal.fire({
+                            type: 'success',
+                            title: "Grupo Creado Sastifactoriamente!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+
+                    if(response == "grupoRepeat"){
+                        Swal.fire({
+                            type: 'info',
+                            title: "El Grupo ya esta creado!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                }).always(()=>{
+                    setTimeout(verificarListaGrupos(),1000)
+                })
+            }
+        })
     })
 
     mostrarEstado();
     verificarListaSolicitud();
     verificarListaAmigos();
+    verificarListaGrupos();
     cambiarEstado();
 
 })

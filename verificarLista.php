@@ -43,7 +43,7 @@
 
     function verificarMensajes($connect,$id){
 
-        $validarMensajes = mysqli_num_rows(mysqli_query($connect, "SELECT id_amigo FROM mensaes WHERE id_amigo = '$id'"));
+        $validarMensajes = mysqli_num_rows(mysqli_query($connect, "SELECT id_amigo FROM mensajes WHERE id_amigo = '$id'"));
 
         if($validarMensajes > 0){
             echo "siSMS";
