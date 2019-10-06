@@ -32,6 +32,20 @@
                 $user = $_POST['user'];
                 listarGrupos($connect,$user);
                 break;
+            case 'verificarMensajes':
+                $nameGrupo = $_POST['name'];
+                verificarMensajes($connect,$nameGrupo);
+                break;
+            case 'listarMensajes':
+                $nameGrupo = $_POST['name'];
+                listarMensajes($connect,$nameGrupo);
+                break;
+            case 'guardarMensajes':
+                $nameGrupo = $_POST['name'];
+                $user = $_POST['user'];
+                $sms = $_POST['sms'];
+                guardarMensajes($connect,$nameGrupo,$user,$sms);
+                break;
             default:
                 throw new \Exception('Unexpected value');
                 break;
@@ -90,5 +104,35 @@
                 echo 'noGuardar';
             }
         }
+    }
+
+    function verificarMensajes($connect,$nameGrupo){
+        $validar = mysqli_num_rows(mysqli_query($connect,"SELECT grupo FROM mensajes WHERE grupo = '$nameGrupo'"));
+
+        if ($validar > 0){
+            echo "siMensajes";
+        }else{
+            echo "noMensajes";
+        }
+    }
+
+    function listarMensajes($connect,$nameGrupo){
+        $resultado = mysqli_query($connect,"SELECT * FROM mensajes WHERE grupo = '$nameGrupo'");
+
+        if(!$resultado){
+            die('Error');
+        }else{
+            while($data = mysqli_fetch_assoc($resultado)){
+                $arreglo['data'][] = $data;
+            }
+            echo json_encode($arreglo);
+        }
+        mysqli_free_result($resultado);
+        mysqli_close($connect);
+    }
+
+    function guardarMensajes($connect,$nameGrupo,$user,$sms){
+        mysqli_query($connect,"INSERT INTO mensajes (id_amigo,mensaje,usuario,grupo) VALUES ('','$sms','$user','$nameGrupo')");
+        echo 'mensajeGuarado';
     }
 ?>

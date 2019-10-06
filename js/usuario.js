@@ -107,6 +107,49 @@ $(document).ready(()=>{
         })
     }
 
+    const verificarMensajesGrupos = (nameGrupo)=>{
+        $.ajax({
+            type: 'POST',
+            url: 'grupos.php',
+            data:{
+                name: nameGrupo,
+                option: 'verificarMensajes'
+            }
+        }).done((response)=>{
+            if(response == 'siMensajes'){
+                listarMensajesGrupos(nameGrupo);
+            }
+        })
+    }
+
+    const listarMensajesGrupos = (nameGrupo)=>{
+        $('#listar-grupos').append(`<ul id="grupos"></ul>`);
+
+        $.ajax({
+            type: 'POST',
+            url: 'grupos.php',
+            data:{
+                name: nameGrupo,
+                option: 'listarMensajes'
+            }
+        }).done((response)=>{
+            console.log(response)
+            const data = JSON.parse(response);
+
+            data.data.forEach((element)=>{
+                const templateHTML = `<li class="right">
+                                        <i class="icon-user-solid-circle"></i>
+                                        <div class="text">
+                                            <p>${element.mensaje}</p>
+                                            <p class="usuario">Enviado por: <span>${element.usuario}</span></p>
+                                        </div>
+                                     </li>`
+                $('#grupos').append(templateHTML);
+            })
+            $('#grupos').append(`<span id="final1"></span>`)
+        })
+    }
+
     const listarSolicitud = ()=>{
         $.ajax({
             type: 'POST',
@@ -385,6 +428,8 @@ $(document).ready(()=>{
                 $titulo.classList.add('title-grupo')
                 $botonSalida.classList.remove('opcion-grupo');
                 $botonSalida.classList.add('icon-arrow-thick-left');
+
+                verificarMensajesGrupos($inputGrupo.dataset.grupo);
             })
         })
     }
@@ -438,6 +483,7 @@ $(document).ready(()=>{
         })
     }
     $botonSalida.addEventListener('click',()=>{
+        $('#grupos').remove();
 
         $containerInputs.classList.remove('chat--text');
         $btnGrupo.classList.remove('btn-disabled');
@@ -526,6 +572,29 @@ $(document).ready(()=>{
             }).always(()=>{
                 $chat.value = '';
                 verificarListaMensajes($chat.dataset.id,'s');
+            })
+        }
+    })
+
+    $inputGrupo.addEventListener('keypress',(e)=>{
+        if (e.keyCode == 13){
+            console.log($inputGrupo.dataset.grupo)
+            console.log($inputGrupo.value);
+            console.log($userDe);
+            $.ajax({
+                type: 'POST',
+                url: 'grupos.php',
+                data: {
+                    name: $inputGrupo.dataset.grupo,
+                    user: $userDe,
+                    sms: $inputGrupo.value,
+                    option: 'guardarMensajes'
+                }
+            }).done(()=>{
+                $inputGrupo.value = "";
+                $('#grupos').remove();
+            }).always(()=>{
+                verificarMensajesGrupos($inputGrupo.dataset.grupo);
             })
         }
     })
