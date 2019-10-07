@@ -51,50 +51,30 @@
         </div>
         <div class="container__list">
             <h2 class="container__list--title">Listado de usuarios</h2>
-            <ul class="container__list--users">
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-                <li class="user">USER1<i class="icon-trash"></i></li>
-            </ul>
+            <ul class="container__list--users" id="list-user"></ul>
         </div>
         <div class="container__info">
             <div class="container__info--user">
                 <div class="user-img"><i class="icon-user-solid-circle"></i></div>
                 <div class="user-info">
-                    <h3 class="title">Nombre Completo</h3>
-                    <p class="name"><strong>Usuario:</strong><span>Nombre USUARIO</span></p>
-                    <p class="email"><i class="icon-envelope"></i><strong>Email:</strong><span>nombre@gmail.com</span></p>
-                    <p class="date"><i class="icon-gift"></i><strong>Fecha de Nacimiento:</strong><span>13 Obctubre 1990</span></p>
-                    <p class="contact"><i class="icon-star-full"></i><strong>Contacto:</strong><span>Nombre</span></p>
+                    <h3 class="title" id="full-name"></h3>
+                    <p class="name"><strong>Usuario:</strong><span id="name-user"></span></p>
+                    <p class="email"><i class="icon-envelope"></i><strong>Email:</strong><span id="email"></span></p>
+                    <p class="date"><i class="icon-gift"></i><strong>Fecha de Nacimiento:</strong><span id="date"></span></p>
+                    <p class="contact"><i class="icon-star-full"></i><strong>Contacto:</strong><span id="contact"></span></p>
                 </div>
             </div>
             <div class="container__info--sms">
-                <ul>
-                    <li class="sms">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda cumque earum explicabo id nostrum qui quisquam quod saepe! <i class="icon-trash"></i></li>
-                    <li class="sms">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos, in inventore nisi quisquam similique temporibus veritatis! Asperiores at dolorum, excepturi fugiat ipsam molestiae, nostrum perspiciatis reiciendis, rem sapiente temporibus unde. A, ad, possimus. Accusamus aliquam architecto atque distinctio dolore esse, harum illo mollitia, nisi, officiis quod soluta tempora tenetur voluptatum.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda cumque earum explicabo id nostrum qui quisquam quod saepe! <i class="icon-trash"></i></li>
-                    <li class="sms">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda cumque earum explicabo id nostrum qui quisquam quod saepe! <i class="icon-trash"></i></li>
-                    <li class="sms">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi dicta excepturi modi quod reiciendis voluptatum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda cumque earum explicabo id nostrum qui quisquam quod saepe! <i class="icon-trash"></i></li>
-                    <li class="sms">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi assumenda cumque earum explicabo id nostrum qui quisquam quod saepe! <i class="icon-trash"></i></li>
-                </ul>
+                <ul id="mensajesList"></ul>
             </div>
         </div>
 	</section>
+    <!-- Libreria polyfill para ES6 Promisas (opcional) para IE11 -->
+    <script src="js/polyfill.min.js"></script>
+    <!-- Libreria de JavasScript para mostrar algun modal modal -->
+    <script src="js/sweetalert2.js"></script>
+    <!-- Libreria de jQuery para el uso de Ajax, eventos, etc -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/admin.js"></script>
 </body>
 </html>

@@ -9,10 +9,15 @@
     $connect =  $init->getConexion();
 
     if(isset($_POST['option'])){
-        $resultado = mysqli_query($connect,"SELECT * FROM usuarios");
+        if($_POST['option'] == 'listar') {
+            $resultado = mysqli_query($connect,"SELECT * FROM usuarios");
+        }else{
+            $sex = $_POST['option'];
+            $resultado = mysqli_query($connect,"SELECT * FROM usuarios WHERE sexo = '$sex'");
+        }
 
         if(!$resultado){
-            die('Error');
+            echo 'Error';
         }else{
             while($data = mysqli_fetch_assoc($resultado)){
                 $arreglo['data'][] = $data;

@@ -51,15 +51,15 @@
             <div class="form__wrapper">
                 <!-- Selecion de tabs del formulario -->
                 <ul class="container__form__list" id="list">
-                    <li class="form__list active">Login</li>
-                    <li class="form__list">Register</li>
+                    <li class="form__list active">Iniciar Sesión</li>
+                    <li class="form__list">Registrarse</li>
                 </ul>
                 <!-- Formulario General -->
                 <div class="form">
                    <!-- Contenedor del Formulario de Inicio de Session -->
                     <form action="" method="POST">
                         <div class="form__user active">
-                            <h2>Iniciar Sesion</h2>
+                            <h2>Iniciar Sesión</h2>
                             <div class="form__user--wrapper">
                                 <input type="text" class="input username" name="user" id="user-login" placeholder="Usuario" required="required">
                                 <input type="password" class="input password" name="pass" id="pass-login" placeholder="Contrasena" required="required">
@@ -113,7 +113,7 @@
                             <div class="form__user--wrapper">
                                 <input type="text" class="input name" name="name" id="name" placeholder="Nombre Completo">
                                 <input type="text" class="input username" name="username" id="user" placeholder="Usuario">
-                                <input type="password" class="input password" name="password" id="pass" placeholder="Contrasena">
+                                <input type="password" class="input password" name="password" id="pass" placeholder="Contraseña">
                                 <input type="email" class="input email" name="email" id="email" placeholder="Correo">
                                 <!-- Radio Button de Fecha de Nacimiento -->
                                 <label for="" class="date">Fecha de Nacimiento:</label>
@@ -127,7 +127,7 @@
                                         <!-- La lista se genera con JavaScript en el Archivo app.js-->
                                     </select>
                                     <select name="age" id="age">
-                                        <option value="Age" disabled selected>Age</option>
+                                        <option value="Año" disabled selected>Age</option>
                                         <!-- La lista se genera con JavaScript en el Archivo app.js-->
                                     </select>
                                 </div>
