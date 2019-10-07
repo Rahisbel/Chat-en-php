@@ -1,5 +1,6 @@
 $(document).ready(()=>{
 
+
     const $userDe = document.querySelector('.user-name').value;
     const $logout = document.getElementById('logout');
     const $chat = document.getElementById('txt');
@@ -15,6 +16,9 @@ $(document).ready(()=>{
     const $addUser = document.getElementById('add-user-grupo');
 
     let validation = false;
+    /**
+     * Funcion que valida si ahi solicitudes de amistad
+     */
     const verificarListaSolicitud = ()=>{
         $.ajax({
             type: 'POST',
@@ -29,6 +33,10 @@ $(document).ready(()=>{
             }
         })
     }
+
+    /**
+     * Funcion que validad si ahi listas de Contactos
+     */
 
     const verificarListaAmigos = ()=>{
         $.ajax({
@@ -45,6 +53,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que valida si ahi listas de Mensajes
+     */
     const verificarListaMensajes = (id,sms)=>{
         $.ajax({
             type: 'POST',
@@ -62,6 +73,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que valida si ahi listas de Grupos
+     */
     const verificarListaGrupos = ()=>{
         $.ajax({
             type: 'POST',
@@ -77,6 +91,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que lista los Grupos Creados
+     */
     const listarGrupos = ()=>{
         $.ajax({
             type: 'POST',
@@ -91,6 +108,10 @@ $(document).ready(()=>{
             $list.forEach((element)=>{
                 element.remove();
             })
+
+            /**
+             * parse en json para poder trabjar facilmente la lista devueltas por la DB
+             */
             const data = JSON.parse(response);
 
             data.data.forEach((element)=>{
@@ -107,6 +128,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que verifica si existen mensajes de los grupos
+     */
     const verificarMensajesGrupos = (nameGrupo)=>{
         $.ajax({
             type: 'POST',
@@ -122,6 +146,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que lista los Mensajes de los Grupos
+     */
     const listarMensajesGrupos = (nameGrupo)=>{
         $('#listar-grupos').append(`<ul id="grupos"></ul>`);
 
@@ -133,7 +160,9 @@ $(document).ready(()=>{
                 option: 'listarMensajes'
             }
         }).done((response)=>{
-            console.log(response)
+            /**
+             * parse en json para poder trabjar facilmente la lista devueltas por la DB
+             */
             const data = JSON.parse(response);
 
             data.data.forEach((element)=>{
@@ -150,6 +179,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que lista la lista de solicitudes de amistad
+     */
     const listarSolicitud = ()=>{
         $.ajax({
             type: 'POST',
@@ -159,6 +191,9 @@ $(document).ready(()=>{
                 option: 'solicitud'
             }
         }).done(function (response) {
+            /**
+             * parse en json para poder trabjar facilmente la lista devueltas por la DB
+             */
             const data = JSON.parse(response);
             data.data.forEach((resultados)=>{
                 if(resultados.para == $userDe){
@@ -170,6 +205,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que lista los Contactos
+     */
     const listarContactos = ()=>{
         $.ajax({
             type: 'POST',
@@ -184,6 +222,9 @@ $(document).ready(()=>{
                 element.remove();
             })
 
+            /**
+             * parse en json para poder trabjar facilmente la lista devueltas por la DB
+             */
             const data = JSON.parse(response);
 
             data.data.forEach((resultados)=>{
@@ -200,6 +241,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que lista los mensajes del chat individual
+     */
     const listarMensajes = (id,sms)=>{
         $.ajax({
             type: 'POST',
@@ -209,6 +253,9 @@ $(document).ready(()=>{
                 option: 'mensajes'
             }
         }).done((response)=>{
+            /**
+             * parse en json para poder trabjar facilmente la lista devueltas por la DB
+             */
             const data = JSON.parse(response);
 
             if(validation){
@@ -219,8 +266,6 @@ $(document).ready(()=>{
                 const scrollElement = document.getElementById('final');
                 scrollElement.remove();
             }
-
-
 
             data.data.forEach((element)=>{
                 const templateHTML = `<li class="right">
@@ -242,6 +287,10 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que que cambia el estado del usuario conectado
+     * Modo: Conectado, Ausente, Ocupado y Desconectado
+     */
     const verEstado = ()=>{
         $.ajax({
             type: 'POST',
@@ -250,6 +299,9 @@ $(document).ready(()=>{
                 option: 'listar'
             }
         }).done((response)=>{
+            /**
+             * parse en json para poder trabjar facilmente la lista devueltas por la DB
+             */
             const data = JSON.parse(response)
             const $listadoContactos = document.querySelectorAll('.state-users');
 
@@ -264,6 +316,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Evento del Click para enviar una solicitud de amistad
+     */
     $('#btn-add').click(()=>{
         Swal.fire({
             title: 'Enviar Solicitud de Amistad',
@@ -305,6 +360,13 @@ $(document).ready(()=>{
         })
     })
 
+    /**
+     * Funcion que notifica, al enviar una solicitud
+     * 1- No Puedes enviar solicitud a ti mismo
+     * 2- El usuario no existe
+     * 3- Ya enviaste una solicitud
+     * 4- Solicitud enviada
+     */
     const notificacion = (tipo,titulo)=>{
         Swal.fire({
             type: tipo,
@@ -314,6 +376,13 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que muestra el estado del usuario
+     * 1- Conectado
+     * 2- Ausente
+     * 3- Ocupado
+     * 4- Desconectado
+     */
     const mostrarEstado = ()=>{
         $.ajax({
             type: 'POST',
@@ -323,6 +392,9 @@ $(document).ready(()=>{
             }
         }).done((response)=>{
             const $mostrarEstado = document.getElementById('user__state');
+            /**
+             * parse en json para poder trabjar facilmente la lista devueltas por la DB
+             */
             const data = JSON.parse(response);
 
             switch (data.data[0].estado) {
@@ -342,6 +414,10 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Cambiar el estado del usuario en la DB
+     * si la respuesta es "Cerrar", se validad el cierre de sesion de la cuenta
+     */
     const opcionesEstado = (estado,opcion)=>{
         $.ajax({
             type: 'POST',
@@ -358,6 +434,10 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Despues de cambia el estado del usuario en la DB, se atualiza el DOM,
+     * para no vovler hacer otra peticion a la DB
+     */
     const cambiarEstado = ()=>{
         const $listaEstado = document.querySelectorAll('.state');
 
@@ -368,10 +448,16 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion del evento click para el cierre de sesion de la cuenta
+     */
     $logout.addEventListener('click',()=>{
         opcionesEstado(0,"logout");
     })
 
+    /**
+     * Funcion para validar si aceptas o eliminas un contacto, de la DB,
+     */
     const confirmacion = (valueUser,$user,index,opcion,mensaje,mensaje2)=>{
         Swal.fire({
             type: 'info',
@@ -403,6 +489,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Mensaje de confirmacion de aceptar y eliminar contancto
+     */
     const acceptAndDeleteFriend = (element,mensaje2)=>{
         element.remove();
         Swal.fire({
@@ -413,22 +502,37 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que captura la lista del grupo
+     * para selecionar a que grupo entrar y mostrar su inforamcion
+     */
     const selecionarGrupo = ()=>{
         const $listaGrupos = document.querySelectorAll('.name-grupo');
 
         $listaGrupos.forEach((element)=>{
             element.addEventListener('click',()=>{
+                // Elimina la lista de grupos del DOM
                 $('#grupos').remove();
+                // Muestra el input de tipo texto, mediante css
                 $containerInputs.classList.add('chat--text');
+                // Desaparece el boto de crear grupos
                 $btnGrupo.classList.add('btn-disabled');
+                // Agrega el boton de agregar usuarios al grupo
                 $addUser.classList.remove('icon');
+                // Visualiza el input de tipo texto para chatear en el grupo
                 $inputGrupo.classList.remove('input-grupo');
+                // Agrega atributo data para facilitar el manejo de las peticiones para enviar mensajes y guardar en la DB
                 $inputGrupo.setAttribute('data-grupo',element.dataset.grupo);
+                // Visualizar el icon de enviar mensajes
                 $iconSend.classList.remove('icon');
+                // Desaprece el Titulo de Grupos
                 $titulo.classList.add('title-grupo')
+                // Visualiza el Boton de salida
                 $botonSalida.classList.remove('opcion-grupo');
+                // Agregar el icono para el boton de salida
                 $botonSalida.classList.add('icon-arrow-thick-left');
 
+                // Verifica si ahi mensajes del grupo selecionado
                 verificarMensajesGrupos($inputGrupo.dataset.grupo);
             })
         })
@@ -448,6 +552,9 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que permite borrar usuario y actualizar el DOM
+     */
     const deleteUser = ()=>{
 
         const $trashIcon = Array.prototype.slice.apply(document.querySelectorAll('.trash-user'));
@@ -464,6 +571,10 @@ $(document).ready(()=>{
         })
     }
 
+    /**
+     * Funcion que permite el envio de mensajes en el chat indivual, y actualizar los mensajes del chat,
+     * despues de enviar un nuevo mensaje
+     */
     const chatUser = ()=>{
         const $chatUser = Array.prototype.slice.apply(document.querySelectorAll('.list-user'));
         const $stateUser = Array.prototype.slice.apply(document.querySelectorAll('.state-users'));
@@ -476,12 +587,14 @@ $(document).ready(()=>{
                     $chatUsuario.textContent = $stateUser[index].dataset.user;
                     $chat.setAttribute('data-id',$stateUser[index].dataset.id);
                     verificarListaMensajes($chat.dataset.id,$chat.value)
-                }else{
-                    console.log('no se puede')
                 }
             })
         })
     }
+
+    /**
+     * Evento para Regresar a la vista del Chat grupal
+     */
     $botonSalida.addEventListener('click',()=>{
         $('#grupos').remove();
 
@@ -495,12 +608,15 @@ $(document).ready(()=>{
         $botonSalida.classList.add('opcion-grupo');
         $botonSalida.classList.remove('icon-arrow-thick-left');
 
+        // Agrega la etiqueta ul, para poder listar los grupos nuevamente
         $('#listar-grupos').append(`<ul id="grupos"></ul>`);
         listarGrupos();
     })
 
+    /**
+     * Evento click para agregar un usuario al grupo
+     */
     $addUser.addEventListener('click',()=>{
-        //alert($inputGrupo.dataset.grupo)
         Swal.fire({
             title: 'Agregar un usuario al Grupo',
             text: 'Ingrese un usuario',
@@ -522,8 +638,10 @@ $(document).ready(()=>{
                         option: 'agregar'
                     }
                 }).done((response) => {
-                    console.log(response)
 
+                    /**
+                     * Validacion para mostrar el mensaje si el usuario fue agregado
+                     */
                     if (response == "guardado") {
                         Swal.fire({
                             type: 'success',
@@ -533,6 +651,9 @@ $(document).ready(()=>{
                         })
                     }
 
+                    /**
+                     * Validacion para mostrar el mensaje si el usuario ya esta en el grupo
+                     */
                     if (response == "existe") {
                         Swal.fire({
                             type: 'info',
@@ -542,6 +663,9 @@ $(document).ready(()=>{
                         })
                     }
 
+                    /**
+                     * Validacion para mostrar el mensaje si el usuario no existe o no son amigos
+                     */
                     if (response == "noGuardar"){
                         Swal.fire({
                             type: 'info',
@@ -555,6 +679,9 @@ $(document).ready(()=>{
         })
     })
 
+    /**
+     * Evento de Teclado para enviar mensajes del chat individual y guardar en la DB
+     */
     $chat.addEventListener('keypress',(e)=>{
         if(e.keyCode == 13 ) {
             $.ajax({
@@ -568,14 +695,19 @@ $(document).ready(()=>{
                 }
             }).done((response)=>{
                 console.log(response)
-
             }).always(()=>{
+                /**
+                 * Limpia el campo del inputa despues de enviar un mensaje nuevo
+                 */
                 $chat.value = '';
                 verificarListaMensajes($chat.dataset.id,'s');
             })
         }
     })
 
+    /**
+     * Evento de Teclado para enviar mensajes del chat grupal y guardar en la DB
+     */
     $inputGrupo.addEventListener('keypress',(e)=>{
         if (e.keyCode == 13){
             console.log($inputGrupo.dataset.grupo)
@@ -599,6 +731,9 @@ $(document).ready(()=>{
         }
     })
 
+    /**
+     * Evento click para crear grupos y actulizar la lista del chat grupal
+     */
     $group.addEventListener('click',()=>{
         Swal.fire({
             title: 'Crear un Grupo',
@@ -620,6 +755,10 @@ $(document).ready(()=>{
                         option: 'crear'
                     }
                 }).done((response)=>{
+
+                    /**
+                     * Validacion del mensaje si el grupo fue creado con exito
+                     */
                     if(response == "grupoCreado"){
                         Swal.fire({
                             type: 'success',
@@ -629,6 +768,9 @@ $(document).ready(()=>{
                         })
                     }
 
+                    /**
+                     * Validacion del mensaje si el grupo ya esta creado
+                     */
                     if(response == "grupoRepeat"){
                         Swal.fire({
                             type: 'info',
@@ -638,16 +780,29 @@ $(document).ready(()=>{
                         })
                     }
                 }).always(()=>{
+                    /**
+                     * si la peticion con la DB usando ajax sucede con exito, despues de 1 segundo
+                     * verifica si ahi listas de los grupos del usuario y actualiza el DOM
+                     */
                     setTimeout(verificarListaGrupos(),1000)
                 })
             }
         })
     })
 
+    /**
+     * Estas funciones se ejecutan si el document usuario.php esta listo para usarse
+     */
+
+    // Ejecuta la funcion para ver el estado del usuario
     mostrarEstado();
+    // Ejecuta la funcion para verificar si existe la lista de solicitudes
     verificarListaSolicitud();
+    // Ejecuta la funcion para verificar si existe lista de contactos
     verificarListaAmigos();
+    // Ejecuta la funcion para verificar si existe lista de grupos
     verificarListaGrupos();
+    // Ejecuta la funcion para poder cambiar el estado de la sesion del usuario
     cambiarEstado();
 
 })

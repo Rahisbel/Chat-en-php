@@ -31,14 +31,17 @@
     <link rel="stylesheet" href="css/chat.css">
 </head>
 <body>
+    <!-- Cabezera de la cuenta del usario -->
     <header class="header">
         <div class="header__user">
+            <!-- Inforamcion del usuario-->
             <div class="header__user--info">
                 <div class="user__name" ><?php echo $_SESSION["nombre"]; ?></div>
                 <div class="user__state" id="user__state">Conectado</div>
                 <input type="hidden" class="user-name" name="" value="<?php echo $_SESSION["usuario"]; ?>">
             </div>
             <div class="state_user">
+                <!-- Menu de cambio de estado del usuario y cerrar sesion -->
                 <ul>
                     <li class="state" data-state="1">Conectado</li>
                     <li class="state" data-state="2">Ausente</li>
@@ -50,22 +53,28 @@
             <div class="header__user--icon icon-user-solid-circle"></div>
         </div>
     </header>
+    <!-- Contendor del chat en general del usuario -->
     <section class="container">
+        <!-- Contenedor de Solicitudes y Contactos -->
         <article class="container__list">
+            <!-- Contenedor de Solicitudes de Amistad -->
             <div class="container__list--solicitud">
                 <h2>Solicitudes de Amistad</h2>
                 <ul class="scroll" id="scrollSolicitudes"></ul>
                 <button type="button" class="btn">Aceptar Solicitudes</button>
             </div>
+            <!-- Contenedor de Lista de Contactos -->
             <div class="container__list--amigos">
                 <h2>Lista de Amigos</h2>
                 <ul class="scroll" id="scrollAmigos"></ul>
                 <button type="button" class="btn" id="btn-add">Agregar Contacto</button>
             </div>
         </article>
+        <!-- Contenedor del Chat Individual y Grupal -->
         <article class="container__chat">
             <div class="container__chat--solo">
                 <h2>Chat con <span id="chat__user">. . .</span></h2>
+                <!-- Chat Individual -->
                 <div class="container--mensajes">
                     <ul id="mensajes"></ul>
                 </div>
@@ -81,6 +90,7 @@
                     <h2 id="add-user-grupo" class="icon-user-add icon"></h2>
                 </div>
                 <div class="container--grupos" id="listar-grupos">
+                    <!-- Chat Grupal, listado de Grupos -->
                     <ul id="grupos"></ul>
                 </div>
                 <div id="container--inputs">
@@ -97,6 +107,7 @@
     <script src="js/sweetalert2.js"></script>
     <!-- Libreria de jQuery para el uso de Ajax, eventos, etc -->
     <script src="js/jquery-3.4.1.min.js"></script>
+    <!-- Manejo de la aplicacion del chat del usuario a conectarse -->
     <script src="js/usuario.js"></script>
 	</body>
 </html>
