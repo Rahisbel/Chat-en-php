@@ -58,6 +58,7 @@
                 <div class="form">
                    <!-- Contenedor del Formulario de Inicio de Session -->
                     <form action="" method="POST">
+                        <!-- Contenedor del Login -->
                         <div class="form__user active">
                             <h2>Iniciar Sesión</h2>
                             <div class="form__user--wrapper">
